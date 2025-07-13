@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. STATE & API CONFIG ---
     let productCache = [];
     let currentFilter = 'All';
-    const API_URL = 'https://sokhaptaesterk-backend.onrender.com/api';
+    const API_URL = 'https://medicine-backend-69c6.onrender.com/api';
 
     // --- 3. CORE API FUNCTION ---
     async function fetchAndInitialize() {
