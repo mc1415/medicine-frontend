@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         detailView.querySelector('#detail-name-en').textContent = product.name_en;
         detailView.querySelector('#detail-name-km').textContent = product.name_km;
         detailView.querySelector('#detail-category').textContent = product.category;
-        const currency = 'THB';
-        detailView.querySelector('#detail-price').textContent = new Intl.NumberFormat('th-TH', { style: 'currency', currency: currency }).format(product.selling_price);
+       const currentCurrency = getCurrentCurrency();
+        detailView.querySelector('#detail-price').textContent = formatPrice(product.selling_price, currentCurrency);
         detailView.querySelector('#detail-description').textContent = product.description || 'No description available for this product.';
         // etc...
 
