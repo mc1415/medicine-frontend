@@ -56,7 +56,7 @@ function setCurrency(currencyCode) {
  * This is a synchronous function that assumes the currency data has already been loaded.
  * @param {number} basePrice The price in USD.
  * @param {string} targetCurrencyCode The currency code to format into (e.g., 'USD').
- * @returns {string} The formatted price string (e.g., "฿3,200", "$92.50").
+ * @returns {string} The formatted price string (e.g., "$92.50", "៛3,200").
  */
 function formatPrice(basePrice, targetCurrencyCode) {
     // 1. Safety check: Ensure the target currency data exists.
