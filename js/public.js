@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- THIS IS THE KEY FIX ---
         // Select the new span elements by their ID inside the cloned card
         const currentPriceEl = card.querySelector('.current-price');
-    // Format the price using the helper, hardcoded to 'THB'
+    // Format the price using the helper and currently selected currency
         const currentCurrency = getCurrentCurrency();
         currentPriceEl.textContent = formatPrice(product.selling_price, currentCurrency);
         

@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="report-summary-grid">
                 <div class="summary-item">
                     <h4>Total Sales</h4>
-                    <p>${formatPrice(data.total_sales, 'THB')}</p>
+                    <p>${formatPrice(data.total_sales, 'USD')}</p>
                 </div>
                 <div class="summary-item">
                     <h4>Total Transactions</h4>
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="summary-item">
                     <h4>Avg. Transaction Value</h4>
-                    <p>${formatPrice(data.average_transaction_value, 'THB')}</p>
+                    <p>${formatPrice(data.average_transaction_value, 'USD')}</p>
                 </div>
                 <div class="summary-item">
                     <h4>Top Selling Product</h4>

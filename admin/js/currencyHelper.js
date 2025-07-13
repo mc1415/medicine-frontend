@@ -32,11 +32,11 @@ window.currencyInitializationPromise = (async () => {
 
 /**
  * Gets the currently selected currency from localStorage.
- * @returns {string} The currency code (e.g., 'THB', 'USD').
+ * @returns {string} The currency code (e.g., 'USD', 'KHR').
  */
 function getCurrentCurrency() {
     // This assumes AppConfig exists and has BASE_CURRENCY defined.
-    return localStorage.getItem('userCurrency') || (window.AppConfig ? AppConfig.BASE_CURRENCY : 'THB');
+    return localStorage.getItem('userCurrency') || (window.AppConfig ? AppConfig.BASE_CURRENCY : 'USD');
 }
 
 /**
@@ -52,9 +52,9 @@ function setCurrency(currencyCode) {
 }
 
 /**
- * Formats a price from the base currency (THB) into the target currency.
+ * Formats a price from the base currency (USD) into the target currency.
  * This is a synchronous function that assumes the currency data has already been loaded.
- * @param {number} basePrice The price in THB.
+ * @param {number} basePrice The price in USD.
  * @param {string} targetCurrencyCode The currency code to format into (e.g., 'USD').
  * @returns {string} The formatted price string (e.g., "฿3,200", "$92.50").
  */
@@ -63,18 +63,18 @@ function formatPrice(basePrice, targetCurrencyCode) {
     const currencyInfo = window.AppCurrencies[targetCurrencyCode];
     if (!currencyInfo) {
         console.warn(`formatPrice: Info for ${targetCurrencyCode} not found in AppCurrencies. Using fallback.`);
-        return `${basePrice.toLocaleString()} THB`; // A safe fallback
+        return `${basePrice.toLocaleString()} USD`; // A safe fallback
     }
 
     // 2. Perform the conversion using the correct rate from the database.
-    // To go FROM the base currency (THB) TO another currency, we DIVIDE.
+    // To go FROM the base currency (USD) TO another currency, we DIVIDE.
     const convertedPrice = basePrice / currencyInfo.rate_to_base;
     const symbol = currencyInfo.symbol;
 
     // 3. Apply special formatting rules based on the currency code.
 
-    // For THB, we typically don't want decimal places.
-    if (targetCurrencyCode === 'THB') {
+    // For KHR, we typically don't want decimal places.
+    if (targetCurrencyCode === 'KHR') {
         return `${symbol}${convertedPrice.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
     }
     
