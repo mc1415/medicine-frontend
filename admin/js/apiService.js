@@ -1,5 +1,5 @@
 // At the top of the file, we can keep the base URL for your own backend.
-const API_BASE_URL = 'https://sokhaptaesterk-backend.onrender.com/api'; 
+const API_BASE_URL = 'https://medicine-backend-69c6.onrender.com/api'; 
 
 // --- Supabase Client Initialization ---
 
