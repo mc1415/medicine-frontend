@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 5. EVENT LISTENERS ---
     searchInput.addEventListener('input', renderAllProducts);
+    window.addEventListener('currencyChanged', renderAllProducts);
     // NOTE: We no longer need the 'currencyChanged' event listener.
 
     // --- 6. INITIAL LOAD ---
