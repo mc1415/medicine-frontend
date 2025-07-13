@@ -25,7 +25,7 @@ window.currencyInitializationPromise = (async () => {
     } catch (error) {
         console.error("❌ Failed to initialize currency system:", error);
         // Provide a safe fallback so the app doesn't crash if the API fails.
-        window.AppCurrencies = { 'THB': { symbol: '฿', rate_to_base: 1.0, name: 'Thai Baht' } };
+        window.AppCurrencies = { 'USD': { symbol: '$', rate_to_base: 1.0, name: 'US Dollar' } };
     }
 })();
 
