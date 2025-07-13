@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase History - Admin Panel</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" ... >
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="admin-sidebar">
+            <div class="sidebar-header">
+                <a href="dashboard.html" title="Dashboard">
+                    <img src="../assets/logo.png" alt="Logo" class="logo-full">
+                    <img src="../assets/logo.png" alt="Icon" class="logo-icon">
+                </a>
+            </div>
+
+            <!-- NEW: List-based navigation -->
+            <ul class="sidebar-nav">
+                <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span class="nav-text" data-i18n-key="nav_dashboard">Dashboard</span></a></li>
+                <li><a href="pos.html"><i class="fa-solid fa-cash-register"></i><span class="nav-text" data-i18n-key="nav_pos">POS System</span></a></li>
+                <li><a href="inventory_management.html"><i class="fa-solid fa-boxes-stacked"></i><span class="nav-text" data-i18n-key="nav_inventory">Inventory</span></a></li>
+                <li><a href="stock_levels.html"><i class="fa-solid fa-chart-simple"></i><span class="nav-text" data-i18n-key="nav_stock_levels">Stock</span></a></li>
+                <li class="active"><a href="purchase_history.html"><i class="fa-solid fa-dolly"></i><span class="nav-text" data-i18n-key="nav_purchases">Purchases</span></a></li>
+                <li><a href="transfers.html"><i class="fa-solid fa-right-left"></i><span class="nav-text" data-i18n-key="nav_transfers">Transfers</span></a></li>
+                <li><a href="warehouses.html"><i class="fa-solid fa-warehouse"></i><span class="nav-text" data-i18n-key="nav_warehouses">Warehouses</span></a></li>
+                <li><a href="sales_history.html"><i class="fa-solid fa-receipt"></i><span class="nav-text" data-i18n-key="nav_sales_history">Sales</span></a></li>
+                <li><a href="staff_management.html"><i class="fa-solid fa-users"></i><span class="nav-text" data-i18n-key="nav_staff">Staff</span></a></li>
+                <li><a href="reports.html"><i class="fa-solid fa-file-invoice"></i><span class="nav-text" data-i18n-key="nav_reports">Reports</span></a></li>
+                <li><a href="settings.html"><i class="fa-solid fa-gear"></i><span class="nav-text" data-i18n-key="nav_settings">Settings</span></a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fa-solid fa-user"></i>
+                    <div class="user-details">
+                        <span id="user-name" class="nav-text"></span>
+                        <span id="user-role" class="nav-text"></span>
+                    </div>
+                </div>
+                <button id="logout-btn" title="Logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="nav-text">Logout</span>
+                </button>
+            </div>
+
+            <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h1>Purchase History</h1>
+                <!-- Optional: Add a date filter or export button here later -->
+            </header>
+
+            <div class="content-card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Date & Time (GMT+7)</th>
+                                <th>Product</th>
+                                <th>SKU</th>
+                                <th>Quantity</th>
+                                <th>Warehouse</th>
+                                <th>Recorded By</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- History rows will be inserted here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/apiService.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/modules/purchase_history.js"></script> <!-- Link to our new JS file -->
+    <script src="js/modules/sidebar.js"></script>
+</body>
+</html>

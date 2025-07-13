@@ -1,0 +1,476 @@
+/* ==========================================================================
+   ADMIN.CSS - Final Version with Collapsible & Responsive Sidebar
+   ========================================================================== */
+
+/* --- 1. FONT IMPORTS & CSS VARIABLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&display=swap');
+
+:root {
+  --primary: #4a69bd;
+  --primary-dark: #2c3e50;
+  --primary-light: #34495e;
+  --accent: #5c98d9;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --warning: #f39c12;
+  --secondary: #6c757d;
+
+  --bg-main: #f4f6f9;
+  --bg-sidebar: #2c3e50;
+  --bg-light: #ffffff;
+  --border-color: #e9ecef;
+
+  --text-dark: #343a40;
+  --text-light: #777;
+  --text-sidebar: #ecf0f1;
+  --white: #fff;
+
+  --font-en: 'Poppins', sans-serif;
+  --font-km: 'Hanuman', serif;
+  --radius: 6px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 80px;
+}
+
+/* --- 2. GLOBAL RESETS & BASE STYLES --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-en), var(--font-km), sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.mobile-menu-toggle {
+  display: none;
+}
+
+/* FIX: Force form elements to inherit the body's font */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  margin: 0;
+}
+
+/* --- 3. MAIN ADMIN LAYOUT --- */
+.admin-layout {
+  display: flex;
+}
+
+.main-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 2rem;
+  margin-left: var(--sidebar-width); /* Offset content by sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* --- 4. SIDEBAR STYLING --- */
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--primary-dark);
+  color: var(--text-sidebar);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  flex-shrink: 0;
+  transition: width 0.3s ease-in-out;
+}
+
+.sidebar-header {
+  display: flex; /* Use flexbox for centering */
+  align-items: center;
+  justify-content: center;
+  height: 70px; /* Give header a fixed height */
+  padding: 1rem;
+  border-bottom: 1px solid var(--primary-light);
+  flex-shrink: 0;
+}
+
+.logo-full {
+  display: block;
+  max-height: 40px; /* Control height instead of width */
+  width: auto;
+}
+
+.logo-icon {
+  display: none; /* Hide by default, shown when collapsed */
+  height: 32px;
+  width: auto;
+}
+
+.sidebar-nav {
+  list-style: none; /* Remove default list bullets */
+  padding: 1rem 0;
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar-nav li {
+  margin: 0 1rem 0.25rem;
+  border-radius: var(--radius);
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  color: #bdc3c7;
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: var(--radius); /* Apply radius to the link for click area */
+}
+
+/* Hover effect on the list item */
+.sidebar-nav li:hover a {
+  background-color: var(--primary-light);
+  color: var(--white);
+}
+
+/* Active state for the list item */
+.sidebar-nav li.active a {
+  background-color: var(--accent);
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* Style for the icons from Font Awesome */
+.sidebar-nav i,
+.sidebar-footer i,
+.sidebar-toggle i {
+  width: 22px; /* Give icons a fixed width for alignment */
+  text-align: center; /* Center the icon within its fixed width */
+  font-size: 1.1rem; /* Adjust icon size */
+  flex-shrink: 0;
+}
+
+.nav-text {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* --- And update the collapsed state styles --- */
+.sidebar.collapsed .sidebar-nav li {
+    margin: 0.25rem auto; /* Center the list item itself */
+}
+.sidebar.collapsed .sidebar-nav a {
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--primary-light);
+  white-space: nowrap;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.user-details { display: flex; flex-direction: column; }
+#user-role { font-size: 0.75rem; color: #bdc3c7; }
+#logout-btn { display: flex; align-items: center; gap: 1rem; background: none; border: none; color: #ff5050; cursor: pointer; padding: 0.5rem; width: 100%; text-align: left; }
+#logout-btn:hover { color: var(--white); }
+
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  background-color: var(--primary-light);
+  border: none;
+  color: var(--white);
+  cursor: pointer;
+  width: 100%;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto; /* Pushes it to the bottom */
+  flex-shrink: 0;
+}
+.sidebar-toggle:hover { background-color: var(--accent); }
+.sidebar-toggle svg { width: 24px; height: 24px; fill: currentColor; }
+.mobile-menu-btn { display: none; }
+
+/* --- COLLAPSED STATE --- */
+.sidebar.collapsed {
+  width: var(--sidebar-width-collapsed); /* e.g., 80px */
+}
+.sidebar.collapsed .nav-text, 
+.sidebar.collapsed .user-details {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  position: absolute; /* Take it out of the layout flow */
+}
+.sidebar.collapsed .logo-full { display: none; }
+.sidebar.collapsed .logo-icon { display: block; }
+.sidebar.collapsed .sidebar-nav a,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed #logout-btn {
+  justify-content: center; /* Center the single icon */
+  padding: 0;
+  width: 48px; /* Make the clickable area a square */
+  height: 48px;
+  margin: 0.25rem auto; /* Center the button itself */
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media (max-width: 768px) {
+  
+  /* --- 1. Main Content & Sidebar Layout --- */
+  
+  .main-content {
+    margin-left: 0; /* Content takes up full width */
+    padding: 1.5rem 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .sidebar {
+    /* Position the sidebar off-screen to the left */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    /* Make it an overlay with a shadow */
+    z-index: 1000; 
+    box-shadow: 0 0 25px rgba(0,0,0,0.2);
+  }
+
+  /* When the '.is-open' class is added, slide the sidebar into view */
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  /* The sidebar toggle button should be hidden on desktop */
+  .sidebar-toggle {
+    display: none;
+  }
+
+  /* --- 2. Mobile Header & Menu Button --- */
+
+  /* Show the mobile hamburger button */
+  .mobile-menu-toggle {
+    display: block; /* Make it visible on mobile */
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1; /* Helps with icon alignment */
+  }
+  .mobile-menu-toggle i {
+    font-size: 1.25rem;
+  }
+  
+  /* --- 3. Optional: Add a dark overlay when the menu is open --- */
+  .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999; /* Below the sidebar but above the content */
+  }
+  .overlay.is-active {
+      display: block;
+  }
+  
+  /* Make the main page title smaller */
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+  
+}
+
+/* --- SHARED COMPONENTS (Buttons, Cards, Tables, etc.) --- */
+.page-header {
+    display: flex;
+    align-items: center; /* Vertically align all items */
+    flex-wrap: wrap;     /* Allow items to wrap to new lines on small screens */
+    margin-bottom: 2rem;
+    gap: 1rem 1.5rem;  /* 1rem vertical gap, 1.5rem horizontal gap */
+}
+
+/* Target the H1 title inside the header */
+.page-header h1 {
+    /* This is the key: it makes the title take up the available space,
+       pushing any elements that come after it to the right. */
+    flex-grow: 1;
+    font-size: 1.8rem; /* You can adjust this as needed */
+    margin: 0; /* Remove default h1 margin */
+}
+
+.page-header > *:last-child {
+    /* Set the left margin to auto */
+    margin-left: auto;
+}
+.page-header .header-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.content-card { background-color: var(--bg-light); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 2rem; }
+.table-container { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; text-align: left; }
+.data-table th, .data-table td { padding: 1rem; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+.data-table th { font-weight: 600; font-size: 0.8rem; text-transform: uppercase; color: var(--text-light); }
+.data-table tbody tr:hover { background-color: #f8f9fa; }
+.data-table .loading-cell, .data-table .error-cell { text-align: center; padding: 2rem; color: var(--text-light); }
+.data-table .error-cell { color: var(--danger); }
+.inactive-row { opacity: 0.6; }
+
+.btn { padding: 0.6rem 1.2rem; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; border: 1px solid transparent; }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background-color: var(--primary); color: #fff; }
+.btn-primary:hover:not(:disabled) { background-color: var(--primary-dark); }
+.btn-secondary { background-color: var(--secondary); color: #fff; }
+.btn-secondary:hover:not(:disabled) { background-color: var(--secondary-dark); }
+.btn-danger { background-color: var(--danger); color: #fff; }
+.btn-danger:hover:not(:disabled) { background-color: var(--danger-dark); }
+.btn-success { background-color: var(--success); color: #fff; }
+
+.status-badge { padding: 0.25rem 0.6rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 700; }
+.status-active { background-color: #e4f8f0; color: #239965; }
+.status-inactive { background-color: #f8f9fa; color: #6c757d; }
+.stock-level.low { color: var(--warning); font-weight: 700; }
+.stock-level.out { color: var(--danger); font-weight: 700; }
+
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); animation: fadeIn 0.3s; }
+.modal-content { background-color: #fefefe; margin: 5% auto; padding: 2rem; border: none; width: 90%; max-width: 500px; border-radius: var(--radius); box-shadow: 0 5px 15px rgba(0,0,0,0.3); position: relative; }
+.modal-content.large { max-width: 800px; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); margin-bottom: 1.5rem; }
+.close-btn { color: #aaa; font-size: 28px; font-weight: bold; cursor: pointer; }
+.close-btn:hover, .close-btn:focus { color: #000; }
+
+.form-group { margin-bottom: 1.5rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 1px solid #ccc; border-radius: var(--radius); font-size: 1rem; }
+.form-group-checkbox { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 0 1.5rem; }
+@media(min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+.form-group.full-width { grid-column: 1 / -1; }
+
+.search-bar-wrapper { position: relative; display: flex; align-items: center; }
+.search-bar-wrapper svg { position: absolute; left: 1rem; color: var(--text-light); pointer-events: none; }
+.search-bar-wrapper input[type="text"] { padding: 0.6rem 1rem 0.6rem 2.5rem; border-radius: var(--radius); border: 1px solid var(--border-color); width: 100%; min-width: 250px; transition: border-color 0.2s, box-shadow 0.2s; }
+.search-bar-wrapper input[type="text"]:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92, 152, 217, 0.2); }
+
+@keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+.language-switcher {
+  display: flex;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-left: auto; /* Pushes it to the right in a flex container */
+}
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.lang-btn.active {
+  background-color: var(--primary-dark);
+  color: var(--white);
+}
+.lang-btn:not(.active):hover {
+    background-color: #f0f0f0;
+}
+
+/* --- New Product Modal Image Area Styles --- */
+
+.image-uploader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the remove button */
+}
+
+/* The main container for the image area, acts as a button */
+.image-drop-zone {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+    display: flex; /* Use flex to center the prompt */
+    align-items: center;
+    justify-content: center;
+}
+.image-drop-zone:hover {
+    border-color: var(--primary-color);
+    background-color: #f1f5f9;
+}
+
+/* The image preview itself */
+#image-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 5; /* Keep image on top of the prompt */
+    background-color: white; /* Hides prompt if image has transparency */
+}
+
+/* The placeholder icon and text prompt */
+.drop-zone-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #a0aec0;
+    z-index: 1; /* Below the image */
+}
+.drop-zone-prompt i {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+.drop-zone-prompt span {
+    font-size: 0.9rem;
+}
+
+
+/* === THE CONDITIONAL VISIBILITY LOGIC === */
+
+/* If the image source is the placeholder, HIDE the image element */
+#image-preview[src*="placeholder.png"] {
+    display: none;
+}
+
+/* If the image source is NOT the placeholder, SHOW the image and HIDE the prompt */
+#image-preview:not([src*="placeholder.png"]) {
+    display: block;
+}
+#image-preview:not([src*="placeholder.png"]) + .drop-zone-prompt {
+    display: none;
+}
+
+/* The 'Remove Image' button below the drop zone */
+#remove-image-btn {
+    width: 100%;
+    max-width: 200px;
+    margin-top: 0.75rem;
+}
+

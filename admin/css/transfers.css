@@ -1,0 +1,35 @@
+/* frontend/admin/css/transfers.css */
+
+.transfer-items-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.transfer-items-section h3 {
+    margin-bottom: 1.5rem;
+}
+
+.transfer-item-list {
+    margin-bottom: 1rem;
+}
+
+/* Default (desktop) view with multiple columns */
+.transfer-item-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr auto; 
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Mobile view: stack the inputs and button */
+@media (max-width: 768px) {
+    .transfer-item-row {
+        grid-template-columns: 1fr; /* A single column */
+        padding-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .transfer-item-row:last-child {
+        border-bottom: none;
+    }
+}

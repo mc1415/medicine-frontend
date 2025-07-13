@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt - Sokha Phtes Terk</title>
+    <link rel="stylesheet" href="css/receipt.css">
+</head>
+<body>
+    <div class="receipt-container">
+        
+        <header class="receipt-header">
+            <!-- The image now contains all the header and contact info -->
+            <img src="../assets/receipt_header.jpg" alt="Sokha Phtes Terk Header">
+            <div class="dynamic-receipt-number">
+              No: <span id="receipt-no"></span>
+          </div>
+        </header>
+
+        <!-- The meta-info section has been completely removed -->
+
+        <main class="receipt-main">
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th class="col-no">ល.រ</th>
+                        <th class="col-name">ឈ្មោះទំនិញ <br><span>Name Of Goods</span></th>
+                        <th class="col-qty">ចំនួន <br><span>Quantity</span></th>
+                        <th class="col-price">តម្លៃរាយ <br><span>Unit Price</span></th>
+                        <th class="col-amount">តម្លៃសរុប <br><span>Amount</span></th>
+                    </tr>
+                </thead>
+                <tbody id="receipt-items-body">
+                    <!-- JavaScript will generate exactly 21 rows here -->
+                </tbody>
+                <tfoot>
+                  <!-- Row 1: Date and THB Total -->
+                  <tr>
+                      <!-- Date spans first 3 columns -->
+                      <td colspan="3" class="footer-text date-info">
+                          <p><span style="font-weight: bold;;">ប៉ោយប៉ែត</span>, ថ្ងៃទី <span id="receipt-day">...</span> ខែ <span id="receipt-month">...</span> ឆ្នាំ <span id="receipt-year">...</span></p> 
+                      </td>
+                      <!-- Total Label -->
+                      <td class="total-label-cell" style="border-left: white; border-bottom: white;">TOTAL / សរុប</td>
+                      <!-- THB Value -->
+                      <td class="total-value-cell" id="total-thb">0 ฿</td>
+                  </tr>
+
+                  <!-- Row 2: Signatures and USD Total -->
+                  <tr>
+                      <!-- KEY FIX 1: "The Buyer" spans first 2 columns -->
+                      <td colspan="2" class="footer-text signature-cell">
+                          <span lang="km">អ្នកទិញ</span> / <span lang="en">The Buyer</span>
+                      </td>
+                      <!-- KEY FIX 2: "The Seller" is in its own cell (the 3rd column) -->
+                      <td colspan="2" class="footer-text signature-cell" style="border-right: 1px solid black; text-align: left;">
+                        <span lang="km">អ្នកលក់</span> / <span lang="en">The Seller</span>
+                    </td>
+                      <!-- USD Value -->
+                      <td class="total-value-cell" id="total-usd">0.00 $</td>
+                  </tr>
+              </tfoot>
+              </table>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script> 
+    <!-- apiService.js depends on config.js -->
+    <script src="js/apiService.js"></script> 
+
+    <!-- 2. Load Your Helpers that DEPEND on Core Services -->
+    <!-- currencyHelper.js depends on apiService.js (for apiFetch) -->
+    <script src="js/currencyHelper.js"></script> 
+
+    <!-- 3. FINALLY, Load the Page-Specific Logic -->
+    <!-- receipt.js depends on currencyHelper.js and apiService.js -->
+    <script src="js/modules/receipt.js"></script> 
+</body>
+</html>

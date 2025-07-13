@@ -1,0 +1,120 @@
+/* frontend/admin/css/login.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* --- 1. Variables & Base Styles --- */
+:root {
+  --accent: #5c98d9;
+  --danger: #e74c3c;
+  --bg-main: #f4f6f9;
+  --border-color: #d1d5db;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --font-sans: 'Poppins', sans-serif;
+  --radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- 2. Full Page Container with Background Image --- */
+.login-page {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  
+  /* Flexbox for centering the form */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Pushes content to the bottom */
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* --- 3. Login Form Container --- */
+.login-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 2rem;
+  margin-bottom: 18vh; /* Space from the bottom edge */
+  text-align: center; /* Override any potential centered text */
+  box-shadow: none; /* Remove any old shadows */
+  align-items: center;
+}
+
+/* Hide the smaller logo inside the container as the big one is in the background */
+.login-container > img {
+  width: 10rem;
+  padding-bottom: 4vh;
+}
+
+.login-container h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--text-dark);
+}
+
+/* --- 4. Form Styling --- */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-light);
+  text-align: left;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  background-color: #ffffff; /* White background for inputs */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(92, 152, 217, 0.25);
+}
+
+#error-message {
+  color: var(--danger);
+  text-align: center;
+  min-height: 1.2em;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* --- 5. Button Styling --- */
+.btn.btn-dark {
+  width: auto; /* Let the button size to its content */
+  min-width: 120px;
+  padding: 0.8rem 2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: #333;
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+.btn.btn-dark:hover:not(:disabled) {
+  background-color: #000;
+}
+
+.btn.btn-dark:disabled {
+  background-color: #95a5a6;
+  cursor: wait;
+}

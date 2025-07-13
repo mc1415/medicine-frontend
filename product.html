@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sokha Ptaes Terk - Products</title>
+    <link rel="stylesheet" href="css/public.css"> <!-- New stylesheet for the public site -->
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <a href="index.html" class="logo-container">
+                <img src="assets/logo.png" alt="Sophea Phtes Nek Logo" style="width: 5rem; height: auto;">
+            </a>
+            <nav class="main-nav" id="main-nav"> 
+                <a href="index.html" class="active" data-i18n-key="nav_products">Products</a>
+            </nav>
+            <nav class="desktop-nav">
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+            </nav>
+            <div class="header-actions">
+                <div id="language-switcher"></div>
+                <input type="search" id="public-search" placeholder="Search for products...">
+            </div>
+
+            <!-- A new container just for the icons -->
+            <div class="header-icons">
+                <button id="cart-icon" class="cart-icon-button" aria-label="Open Shopping Cart">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cart-icon-badge" class="cart-badge">0</span>
+                </button>
+                <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open Menu">
+                    <!-- Let's also use a Font Awesome icon for consistency -->
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" id="product-detail-container">
+        <!-- Product details will be inserted here by JS -->
+        <p class="loading-message">Loading product...</p>
+    </main>
+    
+    <footer class="site-footer-bottom">
+        <div class="container">
+            <p>© 2025 សុខាផ្ទះទឹក. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <template id="product-detail-template">
+        <div class="product-detail-layout">
+            <div class="product-image-gallery">
+                <img src="" alt="Product Image" id="detail-image">
+            </div>
+            <div class="product-info">
+                <h1 id="detail-name-km" class="khmer-text">ឈ្មោះផលិតផល</h1>
+                <h2 id="detail-name-en" style="text-align: left;">Product Name</h2>
+                <div class="info-meta">
+                    <span class="category-tag" id="detail-category">Category</span>
+                    <span class="stock-tag" id="detail-stock">Stock Status</span>
+                </div>
+                <div class="price-wrapper-detail">
+                    <span class="original-price" id="detail-original-price">$0.00</span>
+                    <span class="current-price" id="detail-price">$0.00</span>
+                </div>
+                <div class="description" id="detail-description">
+                    <p>Product description will go here.</p>
+                </div>
+
+                <div class="add-to-cart-form">
+                    <h3>Add to Cart</h3>
+                    <div class="cart-controls">
+                        <input type="number" id="quantity-input" value="1" min="1" max="999">
+                        <button id="add-to-cart-btn" class="btn btn-primary">Add to Cart</button>
+                    </div>
+                </div>
+
+                <a href="index.html" class="btn btn-secondary"> ← Back to All Products</a>
+            </div>
+        </div>
+    </template>
+    
+    <div id="cart-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button id="close-cart-btn" class="close-btn">×</button>
+            <h2>Your Order</h2>
+            <div id="cart-items-container">
+                <!-- Cart items will be injected here by JS -->
+                <p>Your cart is empty.</p>
+            </div>
+            <div class="cart-summary">
+                <strong>Total:</strong>
+                <span id="cart-total-price">0.00 ฿</span>
+            </div>
+            <hr>
+            <form id="order-form">
+                <h3>Your Details</h3>
+                <div class="form-group">
+                    <label for="customer-name">Name</label>
+                    <input type="text" id="customer-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="customer-phone">Phone Number</label>
+                    <input type="tel" id="customer-phone" required>
+                </div>
+                <button type="submit" id="place-order-btn" class="btn btn-primary btn-full-width">Place Order</button>
+            </form>
+        </div>
+    </div>
+
+    <template id="cart-item-template">
+        <div class="cart-item">
+            <img src="https://via.placeholder.com/50" alt="Product Image" class="cart-item-image">
+            <div class="cart-item-details">
+                <p class="cart-item-name">Product Name</p>
+                <p class="cart-item-price">0.00 ฿</p>
+            </div>
+            <div class="cart-item-actions">
+                <input type="number" class="cart-item-quantity" value="1" min="1">
+                <button class="cart-item-remove-btn">Remove</button>
+            </div>
+        </div>
+    </template>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script src="js/cart.js"></script>
+    <script src="js/cart-ui.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/product-detail.js"></script>
+</body>
+</html>

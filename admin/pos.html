@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n-key="pos_title">POS System - Admin Panel</title>
+    <link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/pos.css">
+</head>
+<body>
+    <div class="pos-layout">
+        <!-- Left Panel: Product Selection -->
+        <div class="pos-products">
+            <header class="pos-header">
+                <a href="dashboard.html" class="back-link-icon" title="Back to Dashboard" aria-label="Back to Dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+                        <path d="M0 0h24v24H0V0z" fill="none"/>
+                        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                    </svg>
+                </a>
+                <input type="text" id="product-search" placeholder="Search products by name or SKU..." data-i18n-key="search_products_placeholder">
+                <div id="currency-switcher-container" style="margin-left: auto;"></div>
+            </header>
+            <div class="product-grid" id="product-grid">
+                <!-- Product tiles will be inserted here by JS -->
+            </div>
+        </div>
+
+        <!-- Right Panel: Cart & Payment -->
+        <div class="pos-resizer" id="pos-resizer"></div>
+            <div class="pos-cart">
+                <div class="cart-header">
+                    <h2 data-i18n-key="current_sale">Current Sale</h2>
+                    <div class="user-info">
+                        <span data-i18n-key="cashier">Cashier</span>: <span id="user-name"></span>
+                    </div>
+                </div>
+                <div class="cart-items" id="cart-items">
+                    <p class="empty-cart-message" data-i18n-key="cart_is_empty">Cart is empty</p>
+                    <!-- Cart items will be inserted here by JS -->
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span data-i18n-key="subtotal">Subtotal</span>
+                        <span id="summary-subtotal">฿0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span data-i18n-key="tax">Tax (0%)</span>
+                        <span id="summary-tax">฿0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span data-i18n-key="total">Total</span>
+                        <span id="summary-total">฿0</span>
+                    </div>
+                    <div class="summary-row secondary-total">
+                        <span>≈</span>
+                        <span id="summary-total-usd">$0.00</span>
+                    </div>
+                </div>
+                <div class="cart-actions">
+                    <button class="btn btn-danger" id="cancel-sale-btn" data-i18n-key="cancel_sale">Cancel Sale</button>
+                    <button class="btn btn-primary" id="charge-btn" data-i18n-key="charge" disabled >Charge</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 data-i18n-key="complete_payment_title">Complete Payment</h2>
+                <span class="close-btn">×</span>
+            </div>
+            <div class="payment-details">
+                <p class="total-due" data-i18n-key="total_due">Total Due: <span id="payment-total-due">฿0</span></p>
+                <p class="secondary-due">(approx. <span id="payment-total-due-usd">$0.00</span>)</p>
+                <div class="form-group">
+                    <label for="payment-method" data-i18n-key="payment_method">Payment Method</label>
+                    <select id="payment-method" class="form-control">
+                        <option value="cash" data-i18n-key="payment_method_cash">Cash</option>
+                        <option value="khqr" data-i18n-key="payment_method_mobile">KHQR</option>
+                    </select>
+                </div>
+                <button id="confirm-payment-btn" class="btn btn-dark" style="width:100%; margin-top: 1rem;" data-i18n-key="confirm_payment_btn">Confirm Payment & New Sale</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="post-sale-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sale Completed Successfully!</h2>
+                <span class="close-btn">×</span>
+            </div>
+            <p>What would you like to do next?</p>
+            <div class="post-sale-actions">
+                <button id="print-invoice-btn" class="btn btn-secondary">Print Full Invoice (A5)</button>
+                <button id="print-receipt-btn" class="btn btn-secondary">Print Small Receipt (80mm)</button>
+                <button id="new-sale-btn" class="btn btn-primary">Start New Sale</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qr-code-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Scan to Pay</h2>
+                <span class="close-btn">×</span>
+            </div>
+            <div id="qr-display-area" style="text-align: center; padding: 1rem;">
+                <!-- QR Code image will be injected here -->
+                <p>Loading QR Code...</p>
+            </div>
+            <p style="text-align: center; font-weight: 600;">Waiting for payment confirmation...</p>
+            <div id="slide-to-pay-container" class="slider-container">
+                <div class="slider-track">
+                    <span>Slide to Mark as Paid</span>
+                </div>
+                <div class="slider-thumb" id="slider-thumb"><i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1. Load External Libraries FIRST -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- If page uses charts -->
+    
+    <!-- 2. Load Your Own Config and Core Services -->
+    <!-- config.js has no dependencies -->
+    <script src="js/config.js"></script> 
+    <!-- apiService.js depends on config.js and the Supabase library -->
+    <script src="js/apiService.js"></script> 
+
+    <!-- 3. Load Your Helpers that depend on Core Services -->
+    <!-- currencyHelper.js depends on apiService.js (for apiFetch) -->
+    <script src="js/currencyHelper.js"></script> 
+    <script src="js/i18n.js"></script>
+
+    <!-- 4. Load Global Setup Scripts that use Helpers -->
+    <script src="js/auth.js"></script> <!-- uses apiFetch -->
+    <script src="js/admin.js"></script> <!-- uses helpers -->
+
+    <!-- 5. FINALLY, Load Page-Specific Logic -->
+    <script src="js/modules/pos.js"></script> <!-- Or inventory.js, dashboard.js, etc. -->
+    <script src="js/modules/sidebar.js"></script>
+</body>
+</html>

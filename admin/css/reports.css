@@ -1,0 +1,74 @@
+/* frontend/admin/css/reports.css */
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column on mobile */
+  gap: 2rem;
+}
+
+/* On larger screens, create up to 3 columns */
+@media (min-width: 992px) {
+  .reports-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+.report-category h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--primary-dark);
+}
+
+.report-card {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column; /* Allows us to push the button to the bottom */
+  min-height: 180px; /* Give cards a consistent minimum height */
+  transition: all 0.2s ease-in-out;
+}
+
+.report-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border-color: var(--accent);
+}
+
+.report-card h3 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.report-card p {
+  color: var(--text-light);
+  flex-grow: 1; /* Pushes the actions div to the bottom */
+  line-height: 1.5;
+}
+
+.report-actions {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+/* Add to frontend/admin/css/reports.css */
+.report-summary-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+.summary-item h4 {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.summary-item p {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}

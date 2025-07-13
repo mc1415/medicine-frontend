@@ -1,0 +1,229 @@
+/* frontend/admin/css/receipt.css */
+@import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700;900&family=Poppins:wght@400;600&family=Moul&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arial&display=swap');
+
+/* --- Page Setup --- */
+body {
+    background-color: #525659;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+.receipt-container {
+    width: 148mm; /* A5 width */
+    min-height: 210mm;
+    padding: 7mm;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    padding-top: 5mm;
+}
+
+/* --- Header Section (Image-based) --- */
+.receipt-header {
+    width: 100%;
+    text-align: center;
+    position: relative; /* For positioning the receipt number */
+    margin-bottom: 0;
+}
+.receipt-header img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 0;
+}
+.dynamic-receipt-number {
+    position: absolute;
+    bottom: 38px;
+    right: 12px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    font-size: 1.15rem;
+    color: black;
+}
+#receipt-no {
+    text-decoration: underline;
+    letter-spacing: 1px;
+}
+
+/* --- Customer Info Line --- */
+.customer-info-line {
+    padding: 0.5rem 0;
+    font-family: 'Hanuman', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    border-bottom: 1px solid black; /* This becomes the separator line */
+    margin-bottom: 5px;
+}
+
+/* --- Main Items Table --- */
+.receipt-main {
+    flex-grow: 1; /* This makes the table push the footer down */
+}
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.items-table th, .items-table td {
+    border: 1px solid black;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.items-table th {
+    font-family: 'Hanuman', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.15rem;
+}
+.items-table th span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+}
+.items-table .col-no { width: 6%; }
+.items-table .col-name { width: 44%; text-align: center; }
+.items-table .col-qty { width: 12%; }
+.items-table .col-price { width: 18%; }
+.items-table .col-amount { width: 20%; }
+.items-table tbody tr {
+    height: 25px; /* Tighter rows */
+}
+
+.items-table td.item-name {
+    text-align: left;
+    padding-left: 8px;
+    font-size: 0.9rem;
+}
+
+/* --- FINAL CORRECTED FOOTER SECTION --- */
+/* This is the new flexbox container for the entire bottom section */
+.receipt-footer {
+    display: flex;
+    justify-content: space-between; /* Pushes children to opposite ends */
+    align-items: flex-end; /* Aligns date/signatures and totals box to the bottom */
+    margin-top: auto; /* Pushes the whole footer to the page bottom */
+    padding-top: 10px;
+}
+
+.date-info {
+    font-family: 'Hanuman', serif;
+    font-size: 0.9rem;
+}
+
+.date-info p {
+    margin: 0px;
+    padding: 0px;
+}
+
+.signature-section {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Hanuman', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 320px; /* Give it enough width for the two signatures to space out */
+}
+
+.footer-text.signature-cell {
+    border-color: white;
+}
+
+/* Wrapper for the Totals Box on the right */
+.total-section-wrapper {
+    flex-shrink: 0; /* Prevent it from shrinking */
+}
+
+.total-section {
+    border: 2px solid black;
+    width: 220px;
+}
+.total-row { display: flex; }
+.total-row:first-child { border-bottom: 1px solid black; }
+.total-label { font-weight: 600; flex-grow: 1; font-size: 0.9rem; }
+.total-value {
+    border-left: 1px solid black;
+    width: 65%;
+    text-align: right;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.footer-text.date-info {
+    text-align: center;
+    vertical-align: bottom; /* Vertically center the text line */
+    padding: 7px;
+    margin: 5px;
+    padding-bottom: 2px;
+    padding-right: 10px;
+    border-left: white;
+    border-bottom: white;
+    border-right: white;
+    font-size: 1.2rem;
+}
+
+.total-label-cell {
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-left: white;
+    border-bottom: white;
+    padding: 5px;
+}
+
+.total-value-cell {
+    border-left: black;
+    border-bottom: white;
+    padding: 5px;
+    font-weight: bold;
+}
+
+/* Apply Moul specifically for Khmer text */
+.footer-text span[lang="km"] {
+    font-family: 'Moul', sans-serif; /* Moul for Khmer */
+}
+
+/* Apply Poppins specifically for English text (optional, if you want to be explicit) */
+.footer-text span[lang="en"] {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+}
+
+/* If you need to ensure proper alignment for mixed scripts, sometimes line-height adjustments are useful */
+.footer-text span[lang="km"] {
+    line-height: 1.2; /* Adjust as needed */
+}
+
+/* --- Print Styles --- */
+@media print {
+    body {
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Hide anything that tries to overflow */
+    }
+
+    /* --- KEY FIX 2: Remove visual-only styles from the container --- */
+    .receipt-container {
+        box-shadow: none; /* Remove the shadow for printing */
+        width: 100%;      /* Make it fill the print area */
+        height: 100%;     /* Make it fill the print area */
+        border: none;     /* Remove any potential borders */
+    }
+
+    /* Ensure the header image doesn't have extra margin causing overflow */
+    .receipt-header {
+        margin-bottom: 0;
+    }
+    
+    /* --- KEY FIX 3: Define the page size and margins precisely --- */
+    @page {
+        size: A5;      /* Explicitly set the paper size */
+        margin: 10mm;  /* Set the print margins */
+    }
+}

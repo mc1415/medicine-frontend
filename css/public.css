@@ -1,0 +1,655 @@
+/* public/css/public.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bayon&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+  --primary-dark: #2c3e50; --accent: #5c98d9; --bg-light: #f8f9fa;
+  --text-dark: #34495e; --text-light: #7f8c8d; --border-color: #dee2e6;
+  --white: #ffffff; --success: #2ecc71; --warning: #f39c12; --danger: #e74c3c;
+  --font-en: 'Poppins', sans-serif; --font-km: 'Noto Sans Khmer', sans-serif, Bayon;
+}
+
+body { font-family: var(--font-en); margin: 0; background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+.khmer-text { font-family: var(--font-km); }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+img { max-width: 100%; height: auto; }
+a { text-decoration: none; color: var(--accent); }
+
+/* Header & Footer */
+.site-header { background-color: var(--white); padding: 1rem 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.site-header .container { display: flex; justify-content: space-between; align-items: center; }
+.logo-container img { height: 50px; }
+.main-nav { display: flex; gap: 1.5rem; }
+.main-nav a { color: var(--text-dark); font-weight: 600; }
+.main-nav a.active, .main-nav a:hover { color: var(--accent); }
+#public-search { padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 5px; min-width: 250px; }
+.site-footer-bottom { text-align: center; padding: 2rem; margin-top: 3rem; color: var(--text-light); }
+
+/* Reusable Button */
+.btn { display: inline-block; padding: 0.75rem 1.5rem; border-radius: 5px; font-weight: 600; transition: all 0.2s ease; }
+.btn-secondary { background: var(--bg-light); color: var(--primary-dark); border: 1px solid var(--border-color); }
+.btn-secondary:hover { background-color: #e9ecef; }
+
+/* Hero Section */
+.hero-section { text-align: center; padding: 1.5rem 1rem; }
+.hero-section h1 { font-size: 2.5rem; color: var(--primary-dark); }
+.hero-section p { font-size: 1.2rem; color: var(--text-light); }
+
+/* Product Catalog */
+/* Product Catalog */
+
+/* This is the new outer container that will handle scrolling */
+.filter-scroll-container {
+    position: relative; /* Needed for the fade-out effect */
+    margin-bottom: 2rem;
+}
+
+/* This is the inner container that holds the buttons */
+.product-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    overflow-x: auto;   /* THIS MAKES IT SCROLLABLE ON ALL DEVICES */
+    flex-wrap: nowrap;
+    padding: 0.5rem 1rem;
+    margin: 0 -1rem;
+
+    /* OPTIONAL: Style the scrollbar for desktop for a more modern look */
+    /* This works on Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+        height: 8px; /* Make the scrollbar a bit thinner */
+    }
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Light grey track */
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #ccc; /* A darker grey thumb */
+        border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #aaa; /* Even darker on hover */
+    }
+}
+
+/* Style for the filter buttons themselves (pills) */
+.filter-btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 99px; /* Pill shape */
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap; /* Prevent text inside buttons from wrapping */
+    transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+    background: var(--primary-dark);
+    color: var(--white);
+    border-color: var(--primary-dark);
+}
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem; }
+
+/* Product Card */
+.product-card { display: block; background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.3s ease; }
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.card-image-container { position: relative; }
+.card-image { width: 100%; height: 200px; object-fit: contain; }
+.stock-status { position: absolute; top: 10px; right: 10px; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.75rem; font-weight: 700; color: var(--white); }
+.stock-status.in-stock { background-color: var(--success); }
+.stock-status.low-stock { background-color: var(--warning); }
+.stock-status.out-of-stock { background-color: var(--danger); }
+.card-content { padding: 1rem; }
+.product-name { font-size: 1.1rem; color: var(--text-dark); margin: 0; }
+.product-category { font-size: 0.9rem; color: var(--text-light); margin: 0.25rem 0 1rem; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.card-footer .price { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+.details-link { font-weight: 600; }
+
+/* Product Detail Page */
+.product-detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; }
+.product-image-gallery img { width: 100%; border-radius: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.product-info h1 { font-size: 2.5rem; margin: 0; color: var(--primary-dark); }
+.product-info h2 { font-size: 1.5rem; margin: 0.5rem 0 1rem; color: var(--text-light); }
+.info-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; }
+.category-tag, .stock-tag { padding: 0.4rem 1rem; border-radius: 5px; font-weight: 600; }
+.category-tag { background-color: #e7e9eb; color: #495057; }
+.stock-tag.in-stock { background-color: #e4f8f0; color: #239965; }
+.stock-tag.low-stock { background-color: #fff4e6; color: #f39c12; }
+.stock-tag.out-of-stock { background-color: #fbebeb; color: #d63031; }
+.product-info .price { font-size: 3rem; font-weight: 700; color: var(--accent); margin-bottom: 1.5rem; }
+.description { line-height: 1.8; margin-bottom: 2rem; }
+
+@media (max-width: 768px) {
+    .main-nav { display: none; }
+    #public-search { width: 150px; }
+    .product-detail-layout { grid-template-columns: 1fr; }
+}
+
+/* Add these styles to public/css/public.css */
+
+/* Section Titles */
+h2 {
+  font-size: 2rem;
+  color: var(--primary-dark);
+  text-align: center;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+/* Sale Tag Styling */
+.sale-tag {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: var(--danger);
+  color: var(--white);
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.product-card.on-sale .sale-tag {
+  display: block; /* Shown only on sale items */
+}
+
+/* Price Wrapper for Strikethrough */
+.price-wrapper .original-price {
+  text-decoration: line-through;
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  display: none; /* Hidden by default */
+}
+.product-card.on-sale .original-price {
+  display: inline;
+}
+.price-wrapper .current-price, .card-footer .current-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+/* Product Detail Page Price & CTA */
+.price-wrapper-detail { margin-bottom: 1.5rem; }
+.price-wrapper-detail .original-price {
+    font-size: 1.5rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+    margin-right: 1rem;
+    display: none;
+}
+.price-wrapper-detail .current-price {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--danger); /* Make sale price red for emphasis */
+}
+.product-info .price { /* Old rule, now deprecated by wrapper */
+    font-size: 3rem; font-weight: 700; color: var(--accent); margin-bottom: 1.5rem;
+}
+
+.store-cta {
+  background-color: #eaf2fa;
+  border-left: 5px solid var(--accent);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 5px;
+}
+.store-cta h3 { margin-top: 0; color: var(--primary-dark); }
+.store-cta .address { font-weight: 600; }
+
+.scrolling-container {
+            width: 95%; /* Slightly wider for more impact */
+            max-width: 900px; /* Increased max-width */
+            overflow: hidden;
+            border: 3px solid red; /* Bright green border, typical of LEDs */
+            border-radius: 0.5rem; /* Slightly less rounded, more blocky */
+            padding: 0.75rem 1.5rem; /* Increased padding */
+            background-color: #0d1218; /* Even darker background for contrast */
+            box-shadow: 0 0 25px red; /* Green glow effect */
+            position: relative;
+            /* Ensure the container itself is centered */
+            margin: auto;
+        }
+
+        .scrolling-text {
+            white-space: nowrap;
+            /* Using two animation calls for different purposes: one for movement, one for a subtle flicker */
+            animation: scrollText linear infinite; /* Main scrolling animation */
+            padding-left: 100%;
+            box-sizing: border-box;
+            color: red; /* Bright neon green text */
+            font-size: 2.2rem; /* Larger font size for visibility */
+            /* Add text shadow for LED glow effect */
+            text-shadow: 0 0 2px red, 0 0 7px red, 0 0 12px rgba(255, 0, 0, 0.5);
+            /* Adjust letter spacing for pixelated font clarity */
+            letter-spacing: 0.1rem;
+            display: inline-block; /* Ensure it respects padding-left for starting position */
+        }
+
+        /* Define the scrolling animation */
+        @keyframes scrollText {
+            0% {
+                transform: translateX(0%);
+            }
+            100% {
+                /* Move completely off-screen to the left by its full width */
+                /* This ensures that the duplicated content perfectly follows */
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Adjust animation speed and font size for different screen sizes */
+        @media (max-width: 768px) {
+            .scrolling-text {
+                font-size: 1.5rem; /* Smaller font size on mobile */
+                animation-duration: 18s; /* Applying user-provided speed */
+            }
+            .scrolling-container {
+                padding: 0.5rem 1rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .scrolling-text {
+                font-size: 2rem;
+                animation-duration: 25s; /* Applying user-provided speed */
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .scrolling-text {
+                animation-duration: 15s; /* Applying user-provided speed */
+            }
+        }
+
+#bayon {
+  font-family: Bayon;
+}
+
+.sticky-contact-banner {
+    position: fixed; /* Fix it to the viewport */
+    bottom: 20px;       /* Stick it to the very bottom */
+    left: 0;         /* Stretch it from the far left */
+    right: 0;        /* Stretch it to the far right */
+    max-width: 90%;     /* Ensure it takes up the full width */
+    border-radius: 20px;
+    margin-left: auto;  
+    margin-right: auto;
+    
+    /* Styling for the banner itself */
+    background-color: #0088cc; /* Telegram blue */
+    color: white;
+    padding: 12px 15px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Shadow on top */
+
+    /* Flexbox to layout the contents */
+    display: flex;
+    justify-content: center; /* Center the items horizontally */
+    align-items: center;     /* Center the items vertically */
+    gap: 15px;               /* Space between items */
+
+    /* Text and link styling */
+    text-decoration: none;
+    z-index: 1000; /* Keep it on top of other content */
+    transition: background-color 0.3s ease;
+}
+
+.sticky-contact-banner:hover {
+    background-color: #0099e6; /* Slightly lighter blue on hover */
+}
+
+/* Styling for the text inside the banner */
+.sticky-contact-banner .banner-text {
+    font-size: 1.5rem; /* Make it a good, readable size */
+    text-align: center;
+}
+
+/* Styling for the icons */
+.sticky-contact-banner img {
+    width: 28px;
+    height: 28px;
+}
+
+/* On larger screens (desktops), this full-width bar might be too intrusive.
+   This media query will hide it on screens wider than 768px. 
+   You can adjust or remove this if you want it on desktop too. */
+
+.site-header .container {
+    display: flex;
+    align-items: center;
+    gap: 2rem; /* Adds space between logo, nav, and actions */
+}
+
+.desktop-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.desktop-nav a:hover {
+    color: var(--primary-color);
+}
+
+.header-actions {
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* This is key for vertical alignment */
+    justify-content: flex-end;
+    gap: 8px; /* Adds a small space between the search and the button */
+}
+
+/* --- Mobile Menu Styles (initially hidden on desktop) --- */
+.mobile-menu-btn {
+    display: none; /* Hidden on desktop */
+    /* ... keep other styles like background, border, etc. ... */
+}
+
+/* The new mobile container, hidden on desktop */
+.mobile-nav-container {
+    display: none;
+}
+
+#public-search {
+    height: 40px; 
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 1rem;
+    color: #333;
+    transition: all 0.2s ease-in-out;
+}
+#public-search:focus {
+    outline: none;
+    border-color: var(--primary-color, #007bff); /* Uses your primary color variable, with a fallback */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+}
+
+/* Styling for the hamburger icon's bars (must be outside the media query) */
+.mobile-menu-btn .bar {
+    display: block;
+    background-color: #333;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* ==========================================================================
+   MOBILE & RESPONSIVE STYLES
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    
+    /* --- HIDE DESKTOP-ONLY ELEMENTS --- */
+    .desktop-nav {
+        display: none;
+    }
+    .main-nav {
+        display: none;
+    }
+
+    /* --- LAYOUT FOR HEADER ON MOBILE --- */
+    .header-actions {
+        flex-grow: 1; /* Allows this container to fill available space */
+        display: flex;
+        align-items: center; /* Vertically aligns search and button */
+        justify-content: flex-end; /* Pushes items to the right */
+        gap: 8px; /* Creates space between search and button */
+    }
+    
+    /* --- SPECIFIC STYLES FOR SEARCH ON MOBILE --- */
+
+
+    /* --- STYLES TO MAKE THE MOBILE BUTTON MATCH THE SEARCH BOX --- */
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        
+        /* Matching Dimensions & Style */
+        width: 40px;
+        height: 40px;
+        min-width: 40px; /* Prevents it from shrinking */
+        padding: 0;
+        
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        
+        cursor: pointer;
+
+        z-index: 1001;  
+    }
+
+    /* Style the bars inside the button for mobile view */
+    .mobile-menu-btn .bar {
+        width: 20px;
+        height: 2px;
+        margin: 2.5px 0; /* Creates even spacing */
+    }
+
+    /* --- "X" ANIMATION FOR ACTIVE STATE --- */
+    .mobile-menu-btn.is-active {
+        border-color: var(--primary-color, #007bff); /* Match focus color */
+    }
+    .mobile-menu-btn.is-active .bar:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+    .mobile-menu-btn.is-active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .mobile-menu-btn.is-active .bar:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+    
+    /* --- STYLES FOR THE FULL-SCREEN MOBILE MENU OVERLAY --- */
+    .mobile-nav-container {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-15px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .mobile-nav-container.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+    
+    .mobile-nav-container a {
+        text-decoration: none;
+        color: #333;
+        font-size: 1.6rem;
+        font-weight: 600;
+        padding: 1rem;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+    }
+    .mobile-nav-container a:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+
+}
+
+/* --- Cart Icon --- */
+/* --- Cart Icon --- */
+.cart-icon-button { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    position: relative; 
+    /* Add this for better alignment */
+    color: var(--text-dark); 
+}
+
+/* ADD THIS NEW RULE FOR THE ICON */
+.cart-icon-button i {
+    font-size: 1.5rem; /* Adjust size as needed */
+    vertical-align: middle; /* Helps with alignment */
+}
+
+.cart-badge {
+    position: absolute; 
+    top: -5px; 
+    right: -10px; 
+    /* ... rest of badge styles are fine */
+}
+
+/* --- Add to Cart Form on Product Page --- */
+.add-to-cart-form { margin: 2rem 0; padding: 1.5rem; background: #eaf2fa; border-radius: 8px; }
+.add-to-cart-form h3 { margin-top: 0; }
+.cart-controls { display: flex; gap: 1rem; align-items: center; }
+.cart-controls input[type="number"] { width: 70px; padding: 0.75rem; text-align: center; border: 1px solid var(--border-color); border-radius: 5px; }
+.btn-primary { background-color: var(--accent); color: white; border: none; }
+.btn-primary:hover { background-color: #4a8ac9; }
+
+/* --- Cart Modal --- */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+.modal-content { background: white; padding: 2rem; border-radius: 8px; width: 90%; max-width: 500px; position: relative; max-height: 90vh; overflow-y: auto; }
+.close-btn { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--text-light); }
+.modal-content h2 { margin-top: 0; text-align: center; }
+#cart-items-container { margin: 1.5rem 0; }
+.cart-item { display: flex; gap: 1rem; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 1rem; }
+.cart-item-image { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+.cart-item-details { flex-grow: 1; }
+.cart-item-name, .cart-item-price { margin: 0; }
+.cart-item-name { font-weight: 600; }
+.cart-item-actions input { width: 50px; text-align: center; }
+.cart-item-remove-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 0.9rem; }
+.cart-summary { display: flex; justify-content: space-between; font-size: 1.2rem; margin: 1rem 0; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.form-group input { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 5px; box-sizing: border-box; }
+.btn-full-width { width: 100%; padding: 1rem; }
+
+@media (max-width: 768px) {
+
+    /* --- General Layout & Typography --- */
+    .container {
+        padding: 0 1rem; /* Add a little more side padding on mobile */
+    }
+
+    /* --- Header Adjustments --- */
+    /* --- Header Adjustments --- */
+    .desktop-nav, .main-nav {
+        display: none;
+    }
+
+    .site-header .container {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping */
+        align-items: center; /* Vertically align everything */
+        justify-content: space-between; /* Push logo left and icons right */
+        gap: 1rem; /* Space between rows when they wrap */
+    }
+
+    /* Container for just the cart and mobile menu */
+    .header-icons {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem; /* Space between cart and menu */
+    }
+
+    /* The search bar and language switcher */
+    .header-actions {
+        order: 3; /* This will make it jump to the next line on small screens */
+        width: 100%; /* Make it take the full width on its new line */
+        display: flex;
+    }
+
+    #public-search {
+        flex-grow: 1; /* Search bar takes up most of the space */
+    }
+
+    /* This targets the Font Awesome mobile menu icon */
+    .mobile-menu-btn i {
+        font-size: 1.5rem;
+}
+
+    /* --- Product Detail Page Specifics --- */
+    .product-detail-layout {
+        /* Change from a 2-column grid to a single-column layout */
+        grid-template-columns: 1fr; 
+        gap: 1.5rem; /* Reduce the gap between image and info */
+        margin-top: 1.5rem;
+    }
+
+    .price-wrapper-detail .current-price, #detail-price {
+        font-size: 2.2rem; /* Make the price a bit smaller */
+    }
+
+    /* Make the buttons full-width for easy tapping */
+    .add-to-cart-form .btn, .product-info .btn-secondary {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box; /* Important for full-width buttons */
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .cart-controls {
+        /* Stack the quantity input and button */
+        flex-direction: column;
+        align-items: stretch; /* Make them both full width */
+    }
+    
+    .cart-controls input[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* --- Product Grid on Index Page --- */
+    .product-grid {
+        /* Change from auto-fill to a fixed 2-column grid */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    /* --- Cart Modal on Mobile --- */
+    .modal-content {
+        width: 95%; /* Use almost the full screen width */
+        max-height: 85vh; /* Ensure it doesn't take up the full height */
+    }
+
+    header.site-header img {
+        width: 4rem;
+    }
+
+    .product-filters {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .product-filters::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    /* On mobile, we also don't need the fade-out effect as swiping is natural */
+    .filter-scroll-container::after {
+        display: none;
+    }
+}

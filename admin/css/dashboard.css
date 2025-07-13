@@ -1,0 +1,256 @@
+/* ==========================================================================
+   Dashboard Styles (Desktop First with Responsive Breakpoints)
+   ========================================================================== */
+
+/* --- 1. Top Statistics Grid (3-Card Row) --- */
+.stats-grid {
+    display: grid;
+    /* On large screens, display all 3 cards in a row */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Styling for each individual stat card */
+.stat-card {
+    background-color: var(--bg-card, #ffffff);
+    padding: 1.5rem;
+    border-radius: var(--radius, 8px);
+    box-shadow: var(--shadow, 0 4px 6px rgba(0,0,0,0.05));
+    border-left: 4px solid var(--primary-color, #3b82f6); /* Accent border on the left */
+}
+.stat-card h3 {
+    font-size: 1rem;
+    color: var(--text-light, #64748b);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.stat-card .stat-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--primary-dark, #1e293b);
+    line-height: 1.2;
+}
+
+/* Special styling for the warning card (if you add one later) */
+.stat-card.warning {
+    border-left-color: var(--warning, #f59e0b);
+}
+.stat-card.warning .stat-value {
+    color: var(--warning, #d97706);
+}
+
+
+/* ================================================= */
+/* 2. Main Dashboard Grid (Chart & Lists)            */
+/* ================================================= */
+
+.dashboard-grid {
+    display: grid;
+    gap: 1.5rem;
+    
+    /* DESKTOP LAYOUT: 2 Columns (Chart is wider) */
+    /* The first column takes up 1.5 units of space, the second takes up 1 */
+    grid-template-columns: 1fr 1fr; 
+}
+
+/* The first direct child of the grid (the chart container) */
+.dashboard-grid > .content-card:first-child {
+    grid-column: 1;
+    /* Make the chart span two 'rows' to align with the two stacked list cards */
+    grid-row: 1 / 3;
+    margin-bottom: 0px;
+}
+
+/* The second direct child (Low Stock card) */
+.dashboard-grid > .content-card:nth-child(2) {
+    grid-column: 2;
+    grid-row: 1;
+    height: 350px;
+    overflow: scroll;
+    margin-bottom: 0px;
+}
+
+/* The third direct child (Expiring Soon card) */
+.dashboard-grid > .content-card:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+    height: 220px;
+}
+
+
+/* Chart & List Card Styling */
+.chart-container {
+    position: relative;
+    /* A minimum height is good practice */
+    max-height: 600px; 
+}
+
+.data-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.data-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0.1rem;
+    border-bottom: 1px solid var(--border-color, #e2e8f0);
+}
+.data-list li:last-child {
+    border-bottom: none;
+}
+.data-list .list-item-empty,
+.data-list .list-item-error {
+    color: var(--text-light);
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: none;
+}
+
+/* Specific styling for spans within the list items */
+.list-item-expiring .item-info, .data-list li > span:first-child {
+    font-weight: 600;
+}
+.list-item-expiring .item-details {
+    font-size: 0.8rem;
+    color: var(--text-light, #64748b);
+    display: block;
+    margin-top: 2px;
+}
+.data-list .low-stock-count {
+    font-weight: 700;
+    color: var(--danger, #e53e3e);
+    background-color: #fef2f2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+.list-item-expiring .days-left {
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: var(--warning, #d97706);
+    background-color: #fffbeb;
+}
+.list-item-expiring .days-left.expired {
+    color: var(--danger, #e53e3e);
+    background-color: #fef2f2;
+}
+
+#date-display {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   TABLET & MOBILE RESPONSIVE STYLES
+   ========================================================================== */
+
+/* For tablets and smaller devices */
+@media (max-width: 992px) {
+
+  .body {
+    font-size: 14px;
+  }
+    /* Stack the main content cards into a single column */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Reset the explicit grid placements from the desktop view */
+    .dashboard-grid > .content-card:first-child,
+    .dashboard-grid > .content-card:nth-child(2),
+    .dashboard-grid > .content-card:nth-child(3) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    /* Change the top stats grid to be 2 columns */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    
+    /* --- 1. Main Layout Adjustments --- */
+    
+    /* Change the top stats grid to be a single column */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem; /* Reduce the gap between stat cards */
+    }
+    
+    .dashboard-grid {
+        gap: 1rem; /* Reduce the gap between main content cards */
+    }
+
+    /* Reduce padding on cards for more content space */
+    .stat-card, .content-card {
+        padding: 1.25rem;
+    }
+
+    /* --- 2. Font Size Adjustments --- */
+    
+    /* Make the main page title smaller */
+    .main-content .page-header h1 {
+        font-size: 1.5rem; 
+    }
+
+    /* Reduce the font size of the stat card values */
+    .stat-card .stat-value {
+        font-size: 1.4rem;
+    }
+
+    /* Make the titles inside the content cards smaller */
+    .content-card h3 {
+        font-size: 1.1rem;
+    }
+
+    /* --- 3. Chart & List Adjustments --- */
+
+    /* Reduce the height of the chart on mobile to save vertical space */
+    .chart-container {
+        min-height: 300px;
+    }
+
+    /* Reduce the padding and font size for list items */
+    .data-list li {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* Make the little tags/badges smaller */
+    .data-list li span:last-child {
+        font-size: 0.8rem;
+        padding: 0.15rem 0.4rem;
+    }
+
+    /* Make the secondary text in the expiring list smaller */
+    .list-item-expiring .item-details {
+        font-size: 0.75rem;
+    }
+
+    .page-header {
+        gap: 0.75rem; /* A smaller gap for mobile */
+    }
+
+    /* Target the date display specifically on mobile */
+    #date-display {
+        order: 3; /* Ensure it comes last */
+        width: 100%;
+        font-size: 0.9rem;
+        color: var(--text-light);
+    }
+
+    .dashboard-grid > .content-card:first-child,
+    .dashboard-grid > .content-card:nth-child(2),
+    .dashboard-grid > .content-card:nth-child(3) {
+        width: auto;
+    }
+}

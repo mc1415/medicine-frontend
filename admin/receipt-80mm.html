@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>80mm Receipt</title>
+    <link rel="stylesheet" href="css/receipt-80mm.css">
+</head>
+<body>
+    <div class="receipt">
+        <div class="receipt-header">
+            <img src="../assets/logo.png" alt="Logo" class="logo">
+            <p class="store-name" style="font-family: Moul;">សុខាផ្ទះទឹក</p>
+            <p>Tel: +855 78 659 799</p>
+        </div>
+
+        <div class="receipt-info">
+            <p>Receipt No: <span id="receipt-no"></span></p>
+            <p>Date: <span id="receipt-date"></span></p>
+            <p>Cashier: <span id="receipt-cashier"></span></p>
+        </div>
+
+        <table class="items-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="receipt-items">
+                <!-- Items will be injected here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="total-label">Subtotal</td>
+                    <td class="total-value" id="receipt-subtotal"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="total-label">Tax (0%)</td>
+                    <td class="total-value" id="receipt-tax"></td>
+                </tr>
+                <tr class="grand-total">
+                    <td colspan="3">TOTAL (THB)</td>
+                    <td id="receipt-total-thb"></td>
+                </tr>
+                 <tr class="grand-total secondary">
+                    <td colspan="3">TOTAL (USD)</td>
+                    <td id="receipt-total-usd"></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="receipt-footer">
+            <p>Thank you for your business!</p>
+            <p>សូមអរគុណ!</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+     <script src="js/apiService.js"></script> 
+    <script src="js/config.js"></script>
+    <script src="js/currencyHelper.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/receipt-80mm.js"></script>
+</body>
+</html>

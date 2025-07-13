@@ -1,0 +1,55 @@
+@media (max-width: 768px) {
+
+    /* Reduce font size for all table text on mobile */
+    .data-table {
+        font-size: 0.8rem; 
+    }
+
+    /* Adjust padding for a more compact view */
+    .data-table th, .data-table td {
+        padding: 0.8rem 0.6rem;
+        white-space: nowrap; /* Prevent text from wrapping badly */
+    }
+
+    /* --- Hide Less Important Columns on Mobile --- */
+    /* We target columns by their position using nth-child */
+
+    /* Hide the 3rd column (Category) */
+    .data-table th:nth-child(1),
+    .data-table td:nth-child(1) {
+        display: none;
+    }
+
+    /* Hide the 4th column (Price) */
+    .data-table th:nth-child(3),
+    .data-table td:nth-child(3) {
+        display: none;
+    }
+
+    .data-table th:nth-child(5),
+    .data-table td:nth-child(5) {
+        display: none;
+    }
+
+    /* --- Make Action Buttons Stack Vertically --- */
+    /* Select the last table cell in a row */
+    .data-table td:last-child {
+        /* This makes the buttons stack */
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        /* Remove padding to let buttons fill the space */
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .data-table td:last-child .btn {
+        width: 100%;
+        padding: 0.3rem; /* Smaller padding on buttons */
+        font-size: 0.7rem;
+    }
+
+    .content-card {
+        padding: 1rem;
+    }
+}
