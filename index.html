@@ -144,14 +144,19 @@
         </div>
     </template>
     
+    <!-- 1. External Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    
+    <!-- 2. Shared Helpers from the ADMIN folder (CRITICAL FIX) -->
     <script src="admin/js/config.js"></script>
     <script src="admin/js/apiService.js"></script>
     <script src="admin/js/currencyHelper.js"></script>
-    <script src="js/i18n.js"></script>
-    <script src="js/public.js"></script> 
+    <script src="admin/js/i18n.js"></script> <!-- Using the more powerful admin version -->
+    
+    <!-- 3. Public-specific scripts from the local JS folder -->
     <script src="js/cart.js"></script>
+    <script src="js/public.js"></script>
     <script src="js/cart-ui.js"></script>
 </body>
 </html>
