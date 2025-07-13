@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             exchangeRateInputsContainer.innerHTML = ''; 
 
             // Find the base currency to use in labels
-            const baseCurrencyCode = 'THB'; 
+            const baseCurrencyCode = 'USD';
 
             rates.forEach(currency => {
                 const formGroup = document.createElement('div');

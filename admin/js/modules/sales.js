@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>#${sale.receipt_number || sale.id.substring(0, 8)}</td>
                 <td>${saleTime}</td>
                 <td>${sale.staff_name || 'N/A'}</td>
-                <td>${formatPrice(sale.total_amount, 'THB')}</td>
+                <td>${formatPrice(sale.total_amount, 'USD')}</td>
                 <td>${sale.payment_method}</td>
                 <td>
                     <button class="btn btn-secondary btn-sm view-details-btn" data-id="${sale.id}">View Details</button>

@@ -82,8 +82,8 @@ function populateReceipt(sale) {
                     <td>${index + 1}</td>
                     <td class="item-name">${itemName}</td>
                     <td>${item.quantity}</td>
-                    <td>${formatPrice(itemPrice, 'THB')}</td>
-                    <td>${formatPrice(amount, 'THB')}</td>
+                    <td>${formatPrice(itemPrice, 'USD')}</td>
+                    <td>${formatPrice(amount, 'USD')}</td>
                 </tr>
             `;
         });
@@ -96,11 +96,11 @@ function populateReceipt(sale) {
     }
 
     // Populate totals
-    if (document.getElementById('total-thb')) {
-        document.getElementById('total-thb').textContent = formatPrice(sale.total_amount, 'THB');
-    }
     if (document.getElementById('total-usd')) {
         document.getElementById('total-usd').textContent = formatPrice(sale.total_amount, 'USD');
+    }
+    if (document.getElementById('total-khr')) {
+        document.getElementById('total-khr').textContent = formatPrice(sale.total_amount, 'KHR');
     }
 }
 

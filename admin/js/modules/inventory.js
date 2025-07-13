@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td data-label="SKU">${product.sku}</td>
                 <td data-label="Product Name">${productName}</td>
                 <td data-label="Category">${product.category}</td>
-                <td data-label="Price">${formatPrice(product.selling_price, 'THB')}</td>
+                <td data-label="Price">${formatPrice(product.selling_price, 'USD')}</td>
                 <td data-label="Stock"><span class="stock-level ${stockClass}">${stock}</span></td>
                 <td>
                     <button class="btn btn-secondary btn-sm edit-btn" data-id="${product.id}">Edit</button>
