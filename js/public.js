@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 3. CORE API FUNCTION ---
     async function fetchAndInitialize() {
         try {
-            productGrid.innerHTML = '<p class="loading-message">Loading our finest products...</p>';
+            await window.currencyInitializationPromise;
+            productGrid.innerHTML = '<p class="loading-message">កំពុងទាញយកទិន្នន័យទំនិញ...</p>';
             
             const response = await fetch(`${API_URL}/products/public`);
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
