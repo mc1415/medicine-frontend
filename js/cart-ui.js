@@ -12,10 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderCart() {
         const cart = getCart();
         itemsContainer.innerHTML = ''; // Clear previous content
+        const currentCurrency = getCurrentCurrency();        
 
         if (cart.length === 0) {
             itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
-            totalPriceEl.textContent = '0.00 ฿';
+            totalPriceEl.textContent = formatPrice(0, currentCurrency);
             return;
         }
 
@@ -27,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             itemNode.querySelector('.cart-item-image').src = item.image_url || 'https://via.placeholder.com/50';
             itemNode.querySelector('.cart-item-name').textContent = item.name_en;
-            itemNode.querySelector('.cart-item-price').textContent = `${itemTotalPrice.toLocaleString()} ฿`;
+            itemNode.querySelector('.cart-item-price').textContent = formatPrice(itemTotalPrice, currentCurrency);
             itemNode.querySelector('.cart-item-quantity').value = item.quantity;
 
             // Add event listener for removing the item
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             itemsContainer.appendChild(itemNode);
         });
 
-        totalPriceEl.textContent = `${totalPrice.toLocaleString()} ฿`;
+        totalPriceEl.textContent = formatPrice(totalPrice, currentCurrency);;
     }
     
     // --- EVENT LISTENERS ---
