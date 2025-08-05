@@ -25,7 +25,10 @@ window.currencyInitializationPromise = (async () => {
     } catch (error) {
         console.error("❌ Failed to initialize currency system:", error);
         // Provide a safe fallback so the app doesn't crash if the API fails.
-        window.AppCurrencies = { 'USD': { symbol: '$', rate_to_base: 1.0, name: 'US Dollar' } };
+        window.AppCurrencies = {
+            'KHR': { symbol: '៛', rate_to_base: 1.0, name: 'Cambodian Riel' },
+            'USD': { symbol: '$', rate_to_base: 4000, name: 'US Dollar' }
+        };
     }
 })();
 
@@ -36,7 +39,7 @@ window.currencyInitializationPromise = (async () => {
  */
 function getCurrentCurrency() {
     // This assumes AppConfig exists and has BASE_CURRENCY defined.
-    return localStorage.getItem('userCurrency') || (window.AppConfig ? AppConfig.BASE_CURRENCY : 'USD');
+    return localStorage.getItem('userCurrency') || (window.AppConfig ? AppConfig.BASE_CURRENCY : 'KHR');
 }
 
 /**
@@ -52,9 +55,9 @@ function setCurrency(currencyCode) {
 }
 
 /**
- * Formats a price from the base currency (USD) into the target currency.
+ * Formats a price from the base currency (KHR) into the target currency.
  * This is a synchronous function that assumes the currency data has already been loaded.
- * @param {number} basePrice The price in USD.
+ * @param {number} basePrice The price in KHR.
  * @param {string} targetCurrencyCode The currency code to format into (e.g., 'USD').
  * @returns {string} The formatted price string (e.g., "$92.50", "៛3,200").
  */
@@ -63,11 +66,11 @@ function formatPrice(basePrice, targetCurrencyCode) {
     const currencyInfo = window.AppCurrencies[targetCurrencyCode];
     if (!currencyInfo) {
         console.warn(`formatPrice: Info for ${targetCurrencyCode} not found in AppCurrencies. Using fallback.`);
-        return `${basePrice.toLocaleString()} USD`; // A safe fallback
+        return `${basePrice.toLocaleString()} KHR`; // A safe fallback
     }
 
     // 2. Perform the conversion using the correct rate from the database.
-    // To go FROM the base currency (USD) TO another currency, we DIVIDE.
+    // To go FROM the base currency (KHR) TO another currency, we DIVIDE.
     const convertedPrice = basePrice / currencyInfo.rate_to_base;
     const symbol = currencyInfo.symbol;
 
@@ -78,7 +81,7 @@ function formatPrice(basePrice, targetCurrencyCode) {
         return `${symbol}${convertedPrice.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
     }
     
-    // For all other currencies (like USD, KHR, etc.), format to 2 decimal places.
+    // For all other currencies (like USD), format to 2 decimal places.
     // This is a good general rule for most currencies.
     return `${symbol}${convertedPrice.toFixed(2)}`;
 }
