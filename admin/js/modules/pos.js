@@ -1,3 +1,22 @@
+Of course. Based on the issue you described, here is the solution to ensure your POS frontend can search and display all products from your backend, resolving the 1,000-product limit.
+
+Root Cause Analysis
+
+You are correct in your analysis. The core issue lies in the frontend's request to the backend. While your Supabase query in productController.js is correctly configured to fetch up to 2,000 products using .range(0, 1999), the frontend apiFetch call does not include the necessary Range HTTP header. Consequently, the API defaults to returning a maximum of 1,000 records.
+
+The Fix: Updating the Frontend API Call
+
+To resolve this, I have modified the fetchAndRenderInitialData function in your pos(8).js file. The fix involves adding the Range: 0-1999 header to the apiFetch call, ensuring that the frontend requests the full list of products from the backend.
+
+No changes are needed in apiService.js or productController.js.
+
+pos(8).js
+code
+Js
+download
+content_copy
+expand_less
+
 // In frontend/admin/js/modules/pos.js
 document.addEventListener('DOMContentLoaded', async () => {
 
@@ -63,7 +82,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function fetchAndRenderInitialData() {
         try {
             productGrid.innerHTML = `<p>Loading products...</p>`;
-            const products = await apiFetch('/products'); // This should be your admin endpoint
+            // THE FIX: Add the 'Range' header to fetch up to 2000 products,
+            // overriding the API's default limit of 1000.
+            const products = await apiFetch('/products', {
+                headers: {
+                    'Range': '0-1999'
+                }
+            });
             productCache = products || [];
             window.productCache = productCache;
             renderProducts();
