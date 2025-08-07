@@ -82,8 +82,8 @@ function populateReceipt(sale) {
                     <td>${index + 1}</td>
                     <td class="item-name">${itemName}</td>
                     <td>${item.quantity}</td>
-                    <td>${formatPrice(itemPrice, 'USD')}</td>
-                    <td>${formatPrice(amount, 'USD')}</td>
+                    <td>${formatPrice(itemPrice, 'KHR')}</td>
+                    <td>${formatPrice(amount, 'KHR')}</td>
                 </tr>
             `;
         });

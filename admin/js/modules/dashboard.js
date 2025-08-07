@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // --- 4. UI POPULATION ---
     function populateWidgets(data) {
         // Use the formatPrice helper for all currency values
-        salesTodayEl.textContent = formatPrice(data.sales_today, 'USD');
-        salesMonthEl.textContent = formatPrice(data.sales_this_month, 'USD');
+        salesTodayEl.textContent = formatPrice(data.sales_today, 'KHR');
+        salesMonthEl.textContent = formatPrice(data.sales_this_month, 'KHR');
         lowStockCountEl.textContent = data.low_stock_item_count;
 
         lowStockListEl.innerHTML = ''; // Clear loading message

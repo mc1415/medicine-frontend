@@ -31,15 +31,15 @@ function populateReceipt(sale) {
         row.innerHTML = `
             <td class="item-name">${item.name_en}</td>
             <td>${item.quantity}</td>
-            <td>${formatPrice(item.price_at_sale, 'USD')}</td>
-            <td>${formatPrice(total, 'USD')}</td>
+            <td>${formatPrice(item.price_at_sale, 'KHR')}</td>
+            <td>${formatPrice(total, 'KHR')}</td>
         `;
         itemsBody.appendChild(row);
     });
 
     const subtotal = sale.total_amount; // Assuming total_amount is pre-tax
-    document.getElementById('receipt-subtotal').textContent = formatPrice(subtotal, 'USD');
-    document.getElementById('receipt-tax').textContent = formatPrice(0, 'USD'); // Assuming 0 tax
-    document.getElementById('receipt-total-usd').textContent = formatPrice(sale.total_amount, 'USD');
+    document.getElementById('receipt-subtotal').textContent = formatPrice(subtotal, 'KHR');
+    document.getElementById('receipt-tax').textContent = formatPrice(0, 'KHR'); // Assuming 0 tax
     document.getElementById('receipt-total-khr').textContent = formatPrice(sale.total_amount, 'KHR');
+    document.getElementById('receipt-total-usd').textContent = formatPrice(sale.total_amount, 'USD');
 }

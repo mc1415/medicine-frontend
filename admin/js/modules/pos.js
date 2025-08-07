@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
                 <div class="product-tile-info">
                     <p class="product-tile-name">${productName}</p>
-                    <p class="product-tile-price">${formatPrice(product.selling_price, 'USD')}</p>
+                    <p class="product-tile-price">${formatPrice(product.selling_price, 'KHR')}</p>
                 </div>
             `;
             
@@ -167,14 +167,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 cartItemElement.innerHTML = `
                     <div class="cart-item-details">
                         <span class="cart-item-name">${productName}</span>
-                        <span class="cart-item-price">${formatPrice(item.selling_price, 'USD')}</span>
+                        <span class="cart-item-price">${formatPrice(item.selling_price, 'KHR')}</span>
                     </div>
                     <div class="cart-item-actions">
                         <button class="quantity-btn decrease-btn" data-id="${item.id}">-</button>
                         <span class="cart-item-quantity">${item.quantity}</span>
                         <button class="quantity-btn increase-btn" data-id="${item.id}">+</button>
                     </div>
-                    <span class="cart-item-total">${formatPrice(itemTotal, 'USD')}</span>
+                    <span class="cart-item-total">${formatPrice(itemTotal, 'KHR')}</span>
                 `;
                 cartItemsContainer.appendChild(cartItemElement);
             });
@@ -188,14 +188,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const total = subtotal + tax;
         
         // These elements are always visible, so they are probably safe.
-        if (summarySubtotal) summarySubtotal.textContent = formatPrice(subtotal, 'USD');
-        if (summaryTax) summaryTax.textContent = formatPrice(tax, 'USD');
-        if (summaryTotal) summaryTotal.textContent = formatPrice(total, 'USD');
-        if (summaryTotalUsd) summaryTotalUsd.textContent = formatPrice(total, 'USD'); 
+        if (summarySubtotal) summarySubtotal.textContent = formatPrice(subtotal, 'KHR');
+        if (summaryTax) summaryTax.textContent = formatPrice(tax, 'KHR');
+        if (summaryTotal) summaryTotal.textContent = formatPrice(total, 'KHR');
+        if (summaryTotalUsd) summaryTotalUsd.textContent = formatPrice(total, 'USD');
         
         // THE FIX: These elements are inside a modal. Only update them if they exist.
         if (paymentTotalDue) {
-            paymentTotalDue.textContent = formatPrice(total, 'USD');
+            paymentTotalDue.textContent = formatPrice(total, 'KHR');
         }
         if (paymentTotalDueUsd) {
             paymentTotalDueUsd.textContent = formatPrice(total, 'USD');
@@ -292,17 +292,18 @@ async function generateAndShowQrCode() {
     // --- START OF THE FIX ---
 
     // 2. Prepare data for QR generation (with new dynamic rates)
-    const totalAmountInUSD = cart.reduce((acc, item) => acc + (item.selling_price * item.quantity), 0);
+    const totalAmountInKHR = cart.reduce((acc, item) => acc + (item.selling_price * item.quantity), 0);
     const tran_id = `SALE-${Date.now()}`;
 
-    // 2c. Perform the correct conversion for the total amount.
-    const amountInUSD = totalAmountInUSD.toFixed(2);
+    // 2c. Convert the total amount from KHR to USD using dynamic rates.
+    const usdRate = window.AppCurrencies['USD'] ? window.AppCurrencies['USD'].rate_to_base : 4000;
+    const amountInUSD = (totalAmountInKHR / usdRate).toFixed(2);
 
     // 2d. Prepare each item for the payload in USD.
     const itemsArray = cart.map(item => ({
         name: item.name_en,
         quantity: parseInt(item.quantity),
-        price: parseFloat(item.selling_price.toFixed(2))
+        price: parseFloat((item.selling_price / usdRate).toFixed(2))
     }));
 
     // --- END OF THE FIX ---
