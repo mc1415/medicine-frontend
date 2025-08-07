@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderCart() {
         const cart = getCart();
         itemsContainer.innerHTML = ''; // Clear previous content
-        const currentCurrency = getCurrentCurrency();        
+        const currentCurrency = 'KHR'; // Display cart prices in Cambodian Riel
 
         if (cart.length === 0) {
             itemsContainer.innerHTML = '<p>Your cart is empty.</p>';
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             itemsContainer.appendChild(itemNode);
         });
 
-        totalPriceEl.textContent = formatPrice(totalPrice, currentCurrency);;
+        totalPriceEl.textContent = formatPrice(totalPrice, currentCurrency);
     }
     
     // --- EVENT LISTENERS ---

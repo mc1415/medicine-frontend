@@ -60,9 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- THIS IS THE KEY FIX ---
         // Select the new span elements by their ID inside the cloned card
         const currentPriceEl = card.querySelector('.current-price');
-    // Format the price using the helper and currently selected currency
-        const currentCurrency = getCurrentCurrency();
-        currentPriceEl.textContent = formatPrice(product.selling_price, currentCurrency);
+        // Always display prices in Cambodian Riel without converting
+        currentPriceEl.textContent = formatPrice(product.selling_price, 'KHR');
         
         card.querySelector('.card-image').src = product.image_url || 'https://via.placeholder.com/300x300.png?text=No+Image';
         card.querySelector('.product-name').textContent = product.name_en;
@@ -125,8 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 5. EVENT LISTENERS ---
     searchInput.addEventListener('input', renderAllProducts);
-    window.addEventListener('currencyChanged', renderAllProducts);
-    // NOTE: We no longer need the 'currencyChanged' event listener.
+    // Currency changes are ignored on the public page; prices remain in KHR.
 
     // --- 6. INITIAL LOAD ---
     fetchAndInitialize();
