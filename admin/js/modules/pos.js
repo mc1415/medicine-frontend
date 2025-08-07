@@ -483,8 +483,7 @@ function toggleButtonLoading(button, isLoading, originalText) {
                 addToCart(product.id);
             }
             searchInput.value = '';
-            searchInput.placeholder = defaultSearchPlaceholder;
-            isBarcodeMode = false;
+            searchInput.focus();
         }
     });
     
