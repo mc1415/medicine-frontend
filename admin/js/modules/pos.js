@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const cancelSaleBtn = document.getElementById('cancel-sale-btn');
     const userNameSpan = document.getElementById('user-name');
     const searchInput = document.getElementById('product-search');
+    const barcodeSearchBtn = document.getElementById('barcode-search-btn');
+    const defaultSearchPlaceholder = searchInput.placeholder;
+    let isBarcodeMode = false;
     
     // Modal Elements
     const paymentModal = document.getElementById('payment-modal');
@@ -459,6 +462,31 @@ function toggleButtonLoading(button, isLoading, originalText) {
 
     // --- 6. SETUP EVENT LISTENERS ---
     searchInput.addEventListener('input', renderProducts);
+    barcodeSearchBtn.addEventListener('click', () => {
+        if (isBarcodeMode) {
+            isBarcodeMode = false;
+            searchInput.value = '';
+            searchInput.placeholder = defaultSearchPlaceholder;
+        } else {
+            isBarcodeMode = true;
+            searchInput.value = '';
+            searchInput.placeholder = 'Scan or enter barcode';
+            searchInput.focus();
+        }
+    });
+
+    searchInput.addEventListener('keydown', (e) => {
+        if (isBarcodeMode && e.key === 'Enter') {
+            const code = searchInput.value.trim();
+            const product = productCache.find(p => (p.barcode && p.barcode === code) || (p.sku && p.sku === code));
+            if (product) {
+                addToCart(product.id);
+            }
+            searchInput.value = '';
+            searchInput.placeholder = defaultSearchPlaceholder;
+            isBarcodeMode = false;
+        }
+    });
     
     cartItemsContainer.addEventListener('click', (e) => {
         const target = e.target.closest('.quantity-btn'); // More robust event delegation

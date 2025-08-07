@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const purchaseModal = document.getElementById('purchase-modal');
     const purchaseForm = document.getElementById('purchase-form');
     const closePurchaseModalBtn = purchaseModal.querySelector('.close-btn');
+    const purchaseProductInput = document.getElementById('purchase-product-search');
+    const purchaseProductOptions = document.getElementById('purchase-product-options');
+    const purchaseProductHidden = document.getElementById('purchase-product');
+    const purchaseBarcodeBtn = document.getElementById('purchase-barcode-btn');
+    const purchaseQuantityInput = document.getElementById('purchase-quantity');
+    let purchaseIsBarcodeMode = false;
+    const defaultPurchasePlaceholder = purchaseProductInput ? purchaseProductInput.placeholder : '';
 
     // --- 2. INITIAL SETUP ---
     document.getElementById('user-name').textContent = user ? user.fullName : 'Guest';
@@ -127,12 +134,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 5. MODAL & SUBMISSION LOGIC (Updated for Expiry) ---
     function openPurchaseModal() {
-        const productSelect = document.getElementById('purchase-product');
         const warehouseSelect = document.getElementById('purchase-warehouse');
-        
-        productSelect.innerHTML = '<option value="" disabled selected>Select a product...</option>';
+
+        purchaseForm.reset();
+        purchaseProductInput.value = '';
+        purchaseProductHidden.value = '';
+        purchaseProductInput.placeholder = defaultPurchasePlaceholder;
+        purchaseIsBarcodeMode = false;
+
+        purchaseProductOptions.innerHTML = '';
         productsInventoryCache.forEach(p => {
-            productSelect.innerHTML += `<option value="${p.id}">${p.name_en} (SKU: ${p.sku})</option>`;
+            const option = document.createElement('option');
+            option.value = `${p.name_en} (SKU: ${p.sku || 'N/A'})`;
+            option.dataset.id = p.id;
+            if (p.barcode) option.dataset.barcode = p.barcode;
+            purchaseProductOptions.appendChild(option);
         });
 
         warehouseSelect.innerHTML = '<option value="" disabled selected>Select receiving warehouse...</option>';
@@ -140,13 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
             warehouseSelect.innerHTML += `<option value="${w.id}">${w.name}</option>`;
         });
 
-        purchaseForm.reset();
-        // Also clear the new fields if they exist in the HTML
-        const expiryInput = document.getElementById('purchase-expiry-date');
-        if (expiryInput) expiryInput.value = '';
-        const batchInput = document.getElementById('purchase-batch-number');
-        if (batchInput) batchInput.value = '';
-        
         purchaseModal.style.display = 'block';
     }
 
@@ -185,6 +194,46 @@ document.addEventListener('DOMContentLoaded', () => {
     purchaseInBtn.addEventListener('click', openPurchaseModal);
     closePurchaseModalBtn.addEventListener('click', () => purchaseModal.style.display = 'none');
     purchaseForm.addEventListener('submit', handlePurchaseSubmit);
+    purchaseBarcodeBtn.addEventListener('click', () => {
+        if (purchaseIsBarcodeMode) {
+            purchaseIsBarcodeMode = false;
+            purchaseProductInput.value = '';
+            purchaseProductInput.placeholder = defaultPurchasePlaceholder;
+        } else {
+            purchaseIsBarcodeMode = true;
+            purchaseProductInput.value = '';
+            purchaseProductInput.placeholder = 'Scan or enter barcode';
+            purchaseProductInput.focus();
+        }
+    });
+    purchaseProductInput.addEventListener('change', () => {
+        const val = purchaseProductInput.value;
+        const option = Array.from(purchaseProductOptions.options).find(o => o.value === val);
+        purchaseProductHidden.value = option ? option.dataset.id : '';
+    });
+    purchaseProductInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (purchaseIsBarcodeMode) {
+                const code = purchaseProductInput.value.trim();
+                const product = productsInventoryCache.find(p => (p.barcode && p.barcode === code) || (p.sku && p.sku === code));
+                if (product) {
+                    purchaseProductHidden.value = product.id;
+                    purchaseProductInput.value = `${product.name_en} (SKU: ${product.sku || 'N/A'})`;
+                    purchaseQuantityInput.focus();
+                }
+                purchaseProductInput.placeholder = defaultPurchasePlaceholder;
+                purchaseIsBarcodeMode = false;
+            } else {
+                const val = purchaseProductInput.value;
+                const option = Array.from(purchaseProductOptions.options).find(o => o.value === val);
+                if (option) {
+                    purchaseProductHidden.value = option.dataset.id;
+                    purchaseQuantityInput.focus();
+                }
+            }
+        }
+    });
 
     // --- 7. INITIAL LOAD ---
     fetchAndRenderData();

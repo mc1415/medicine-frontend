@@ -15,6 +15,7 @@ body { overflow: hidden; }
 .pos-header { padding: 0.75rem; background-color: var(--bg-light); border-bottom: 1px solid var(--border-color); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
 .pos-header .back-link { text-decoration: none; color: var(--primary-dark); font-weight: 600; }
 #product-search { flex-grow: 1; min-width: 150px; padding: 0.6rem; border-radius: 5px; border: 1px solid var(--border-color); }
+.barcode-btn { padding: 0.6rem; border: 1px solid var(--border-color); border-radius: 5px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
 /* --- List Container --- */
 .product-grid {
