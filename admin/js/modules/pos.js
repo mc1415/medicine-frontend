@@ -463,10 +463,16 @@ function toggleButtonLoading(button, isLoading, originalText) {
     // --- 6. SETUP EVENT LISTENERS ---
     searchInput.addEventListener('input', renderProducts);
     barcodeSearchBtn.addEventListener('click', () => {
-        isBarcodeMode = true;
-        searchInput.value = '';
-        searchInput.placeholder = 'Scan or enter barcode';
-        searchInput.focus();
+        if (isBarcodeMode) {
+            isBarcodeMode = false;
+            searchInput.value = '';
+            searchInput.placeholder = defaultSearchPlaceholder;
+        } else {
+            isBarcodeMode = true;
+            searchInput.value = '';
+            searchInput.placeholder = 'Scan or enter barcode';
+            searchInput.focus();
+        }
     });
 
     searchInput.addEventListener('keydown', (e) => {
