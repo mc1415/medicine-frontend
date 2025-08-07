@@ -587,6 +587,8 @@ function toggleButtonLoading(button, isLoading, originalText) {
         document.removeEventListener('touchmove', onMouseMove);
         document.removeEventListener('touchend', onMouseUp);
     };
+    
+    window.productCache = productCache;
 
     resizer.addEventListener('mousedown', onMouseDown);
     resizer.addEventListener('touchstart', onMouseDown); // Add touch support
