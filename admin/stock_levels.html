@@ -95,8 +95,13 @@
                 </div>
                 <form id="purchase-form">
                     <div class="form-group">
-                        <label for="purchase-product" data-i18n-key="product">Product</label>
-                        <select id="purchase-product" required></select>
+                        <label for="purchase-product-search" data-i18n-key="product">Product</label>
+                        <div class="product-input-wrapper">
+                            <input type="text" id="purchase-product-search" list="purchase-product-options" placeholder="Search products...">
+                            <button type="button" class="barcode-btn" id="purchase-barcode-btn" title="Scan Barcode"><i class="fa-solid fa-barcode"></i></button>
+                        </div>
+                        <datalist id="purchase-product-options"></datalist>
+                        <input type="hidden" id="purchase-product" required>
                     </div>
                     <div class="form-group">
                         <label for="purchase-warehouse" data-i18n-key="warehouse-receiving">Warehouse (Receiving)</label>
