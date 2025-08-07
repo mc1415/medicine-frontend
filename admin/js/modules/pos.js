@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             productGrid.innerHTML = `<p>Loading products...</p>`;
             const products = await apiFetch('/products'); // This should be your admin endpoint
             productCache = products || [];
+            window.productCache = productCache;
             renderProducts();
         } catch (error) {
             productGrid.innerHTML = `<p style="color:red; text-align:center;">Could not load products. (${error.message})</p>`;
@@ -588,7 +589,7 @@ function toggleButtonLoading(button, isLoading, originalText) {
         document.removeEventListener('touchend', onMouseUp);
     };
     
-    window.productCache = productCache;
+    
 
     resizer.addEventListener('mousedown', onMouseDown);
     resizer.addEventListener('touchstart', onMouseDown); // Add touch support
