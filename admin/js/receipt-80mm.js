@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const sale = JSON.parse(saleDataString);
         populateReceipt(sale);
-
         const closeWindow = () => window.close();
         let printInitiated = false;
 
