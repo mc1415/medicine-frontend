@@ -12,8 +12,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const sale = JSON.parse(saleDataString);
         populateReceipt(sale);
-        window.addEventListener('afterprint', () => window.close());
-        setTimeout(() => window.print(), 500);
+        const closeWindow = () => window.close();
+        let printInitiated = false;
+
+        window.addEventListener('afterprint', closeWindow);
+        window.addEventListener('focus', () => {
+            if (printInitiated) {
+                closeWindow();
+            }
+        });
+
+        setTimeout(() => {
+            printInitiated = true;
+            window.print();
+        }, 500);
     } catch (error) {
         console.error('Failed to render receipt:', error);
     }
