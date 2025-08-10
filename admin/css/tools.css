@@ -1,0 +1,66 @@
+.print-area {
+  border: 1px solid #000;
+  padding: 8px;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.barcode-container svg {
+  width: 100%;
+}
+
+.price-tag {
+  width: 200px;
+  font-size: 14px;
+}
+
+.price-tag-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-tag-logo {
+  width: 40px;
+}
+
+.price-tag-price {
+  border: 1px solid #000;
+  padding: 2px 6px;
+  font-weight: bold;
+}
+
+.price-tag-name {
+  margin-top: 4px;
+  text-align: center;
+}
+
+.results {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+
+.result-item {
+  padding: 4px;
+  cursor: pointer;
+}
+
+.result-item:hover {
+  background: #f0f0f0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
