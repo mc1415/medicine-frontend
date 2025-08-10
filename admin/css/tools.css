@@ -1,0 +1,97 @@
+.tools-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tools-form .form-group {
+  flex: 1 1 220px;
+  margin-bottom: 0;
+}
+
+.print-area {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: var(--bg-light);
+  padding: 1rem;
+  display: inline-block;
+  margin-top: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.barcode-container {
+  width: 220px;
+  text-align: center;
+}
+
+.barcode-container svg {
+  width: 100%;
+}
+
+.price-tag {
+  width: 220px;
+  font-size: 14px;
+}
+
+.price-tag-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-tag-logo {
+  width: 30px;
+}
+
+.price-tag-price {
+  border: 1px solid var(--text-dark);
+  padding: 2px 8px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: var(--radius);
+}
+
+.price-tag-name {
+  margin-top: 4px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.results {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  max-height: 180px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+  box-shadow: var(--shadow);
+  background: var(--bg-light);
+}
+
+.result-item {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+.result-item + .result-item {
+  border-top: 1px solid var(--border-color);
+}
+
+.result-item:hover {
+  background: var(--bg-main);
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area, .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    box-shadow: none;
+  }
+}

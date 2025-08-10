@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Settings - Admin Panel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Price Tag Generator - Admin Panel</title>
     <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="admin-layout">
@@ -17,7 +18,6 @@
                     <img src="../assets/logo.png" alt="Icon" class="logo-icon">
                 </a>
             </div>
-
             <ul class="sidebar-nav">
                 <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span class="nav-text" data-i18n-key="nav_dashboard">Dashboard</span></a></li>
                 <li><a href="pos.html"><i class="fa-solid fa-cash-register"></i><span class="nav-text" data-i18n-key="nav_pos">POS System</span></a></li>
@@ -29,9 +29,9 @@
                 <li><a href="sales_history.html"><i class="fa-solid fa-receipt"></i><span class="nav-text" data-i18n-key="nav_sales_history">Sales</span></a></li>
                 <li><a href="staff_management.html"><i class="fa-solid fa-users"></i><span class="nav-text" data-i18n-key="nav_staff">Staff</span></a></li>
                 <li><a href="reports.html"><i class="fa-solid fa-file-invoice"></i><span class="nav-text" data-i18n-key="nav_reports">Reports</span></a></li>
-                <li class="active"><a href="settings.html"><i class="fa-solid fa-gear"></i><span class="nav-text" data-i18n-key="nav_settings">Settings</span></a></li>
+                <li><a href="settings.html"><i class="fa-solid fa-gear"></i><span class="nav-text" data-i18n-key="nav_settings">Settings</span></a></li>
                 <li><a href="barcode_gen.html"><i class="fa-solid fa-barcode"></i><span class="nav-text" data-i18n-key="nav_barcode_gen">Barcode Gen</span></a></li>
-                <li><a href="price_tag_gen.html"><i class="fa-solid fa-tags"></i><span class="nav-text" data-i18n-key="nav_price_tag_gen">Price Tag Gen</span></a></li>
+                <li class="active"><a href="price_tag_gen.html"><i class="fa-solid fa-tags"></i><span class="nav-text" data-i18n-key="nav_price_tag_gen">Price Tag Gen</span></a></li>
             </ul>
             <div class="sidebar-footer">
                 <div class="user-info">
@@ -46,51 +46,44 @@
                     <span class="nav-text">Logout</span>
                 </button>
             </div>
-
             <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle Sidebar">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </aside>
-
         <!-- Main Content -->
         <main class="main-content">
             <header class="page-header">
                 <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open Menu">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-                <h1 data-i18n-key="settings_title">Settings</h1>
+                <h1 data-i18n-key="price_tag_gen_title">Price Tag Generator</h1>
             </header>
-
             <div class="content-card">
-                <h2 data-i18n-key="language_preference">Language Preference</h2>
-                <p class="text-light" data-i18n-key="language_desc">Choose the display language for the admin panel.</p>
-                <div class="form-group" style="margin-top: 1.5rem;">
-                    <select id="language-select" class="settings-select">
-                        <option value="en">English</option>
-                        <option value="km">ភាសាខ្មែរ (Khmer)</option>
-                    </select>
-                </div>
-            </div>
-            <div class="content-card">
-                <h2 data-i18n-key="exchange_rates">Exchange Rates</h2>
-                <p class="text-light" data-i18n-key="exchange_rates_desc">Set the conversion rates relative to your base currency (KHR).</p>
-                
-                <form id="exchange-rate-form" style="margin-top: 1.5rem;">
-                    <div id="exchange-rate-inputs">
-                        <!-- Input fields will be generated here by JS -->
-                        <p>Loading rates...</p>
+                <div class="tools-form">
+                    <div class="form-group">
+                        <label for="product-search">Search Product</label>
+                        <input type="text" id="product-search" placeholder="Search by name or barcode">
                     </div>
-                    <button type="submit" class="btn btn-dark" style="margin-top: 1rem;" data-i18n-key="save_rates_btn">Save Rates</button>
-                </form>
+                </div>
+                <div id="product-results" class="results"></div>
+                <div class="print-area price-tag" id="price-tag" style="display:none;">
+                    <div class="price-tag-top">
+                        <img src="../assets/logo.png" alt="Logo" class="price-tag-logo">
+                        <div class="price-tag-price" id="tag-price"></div>
+                    </div>
+                    <div class="price-tag-name" id="tag-name"></div>
+                </div>
+                <button class="btn btn-secondary" id="print-tag" style="display:none; margin-top:1rem;">Print</button>
             </div>
         </main>
     </div>
-
     <script src="js/auth.js"></script>
     <script src="js/apiService.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/currencyHelper.js"></script>
     <script src="js/i18n.js"></script>
-    <script src="js/modules/sidebar.js"></script>
     <script src="js/admin.js"></script>
-    <script src="js/modules/settings.js"></script> <!-- New JS file for this page -->
+    <script src="js/modules/price_tag_gen.js"></script>
+    <script src="js/modules/sidebar.js"></script>
 </body>
 </html>
