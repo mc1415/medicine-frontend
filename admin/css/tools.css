@@ -15,9 +15,7 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   background: var(--bg-light);
-  padding: 1rem;
   display: inline-block;
-  margin-top: 1rem;
   box-shadow: var(--shadow);
 }
 
@@ -31,32 +29,32 @@
 }
 
 .price-tag {
-  width: 220px;
+  width: 80mm;
   font-size: 14px;
 }
 
 .price-tag-top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .price-tag-logo {
-  width: 30px;
+  width: 40px;
 }
 
 .price-tag-price {
   border: 1px solid var(--text-dark);
   padding: 2px 8px;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.3rem;
   border-radius: var(--radius);
 }
 
 .price-tag-name {
-  margin-top: 4px;
+  margin-top: 10px;
   text-align: center;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .results {
