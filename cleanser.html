@@ -26,7 +26,7 @@
     /* ===== Layout scales up for kiosk ===== */
     .wrap{max-width:1380px;margin:0 auto;padding:28px}
     header{display:flex;gap:18px;align-items:center;margin-bottom:18px}
-    .logo{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#a7f3d0,#bfdbfe);display:grid;place-items:center;font-weight:800;color:#064e3b;font-size:18px}
+    .logo{width:65px;height:65px;border-radius:14px;display:grid;place-items:center;font-weight:800;color:#064e3b;font-size:18px}
     h1{font-size:clamp(26px,3.6vw,42px);margin:0}
     .sub{color:var(--muted);margin-top:6px;font-size:16px}
 
@@ -90,7 +90,7 @@
     <header>
       <img class="logo" src="assets/logo.png" alt="Sophea Phtes Nek Logo" style="width: 4rem; height: auto;">
       <div>
-        <h1>កម្មវិធីជ្រើសរើសសាប៊ូលាងមុខ</h1>
+        <h1>ត្រូវការជំនួយក្នុងការជ្រើសរើសសាប៊ូលាងមុខដែលសមស្របឬ?</h1>
         <div class="sub">ឆ្លើយសំណួរខ្លីៗ បន្ទាប់មកយើងនឹងណែនាំផលិតផលសមរម្យបំផុតពីធ្នើនេះ ។</div>
         <div class="topbar">
         </div>
@@ -160,7 +160,7 @@
           <p>យើងផ្គូផ្គងចម្លើយរបស់អ្នកជាមួយស្លាកផលិតផល (ប្រភេទស្បែក បញ្ហា ថ្លៃ) ហើយគណនាពិន្ទុ ដើម្បីបង្ហាញផលិតផលសមរម្យបំផុត។</p>
         </div>
         <div class="section">
-          <h3 style="margin:0">លទ្ធផលល្អបំផុត</h3>
+          <h3 style="margin:0">ទាំងនេះគឺផលិតផលដែលសមស្របបំផុតសម្រាប់បញ្ហាអ្នក:</h3>
           <div id="results" class="results" aria-live="polite"></div>
         </div>
       </aside>
@@ -241,7 +241,7 @@
       for(const item of list){
         const card = document.createElement('div');
         card.className = 'card';
-        const imgHtml = item.img ? `<img class="thumb" src="${item.img}" alt="${item.brand} ${item.name}" loading="lazy">` : `<div class="thumb" style="display:grid;place-items:center;color:#94a3b8">គ្មានរូប</div>`;
+        const imgHtml = item.img ? `<img class="thumb" src="${item.img}" alt="${item.brand} ${item.name}" loading="lazy">` : `<div class="thumb" style="display:grid;place-items:center;color:#94a3b8;object-fit:contain">គ្មានរូប</div>`;
         card.innerHTML = `
           ${imgHtml}
           <div class="title">${item.name}</div>
