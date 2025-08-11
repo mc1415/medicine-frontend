@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>កម្មវិធីជ្រើសរើសសាប៊ូលាងមុខ</title>
+  <style>
+  
+    @import url('https://fonts.googleapis.com/css2?family=Suwannaphum:wght@100;300;400;700;900&display=swap');
+
+    :root{
+      --bg:#f7fafc;
+      --text:#0f172a;
+      --muted:#475569;
+      --card:#ffffff;
+      --border:#e5e9f0;
+      --accent:#16a34a; /* green */
+      --accent-2:#2563eb; /* blue */
+      --chip:#eef2ff;
+    }
+    
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family: "Suwannaphum", "Khmer OS Siemreap", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:var(--bg); color:var(--text); font-size:18px;}
+
+    /* ===== Layout scales up for kiosk ===== */
+    .wrap{max-width:1380px;margin:0 auto;padding:28px}
+    header{display:flex;gap:18px;align-items:center;margin-bottom:18px}
+    .logo{width:56px;height:56px;border-radius:14px;background:linear-gradient(135deg,#a7f3d0,#bfdbfe);display:grid;place-items:center;font-weight:800;color:#064e3b;font-size:18px}
+    h1{font-size:clamp(26px,3.6vw,42px);margin:0}
+    .sub{color:var(--muted);margin-top:6px;font-size:16px}
+
+    .topbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .topbar .btn{padding:12px 16px}
+
+    .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:22px}
+    @media (max-width: 960px){ .grid{grid-template-columns:1fr} }
+
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.06);overflow:hidden}
+    .section{padding:22px}
+    .section + .section{border-top:1px dashed var(--border)}
+
+    .q{margin:10px 0 16px}
+    .q h3{margin:0 0 10px;font-size:20px}
+
+    .opt{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+    label.optitem{display:flex;gap:12px;align-items:center;background:#f9fbff;border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;min-height:52px}
+    label.optitem:hover{border-color:#cdd7e3;background:#f5f8ff}
+    input[type="radio"],input[type="checkbox"]{accent-color:var(--accent); width:20px; height:20px}
+
+    .actions{display:flex;gap:12px;padding:18px;border-top:1px solid var(--border);background:#fafcff}
+    .btn{appearance:none;border:none;border-radius:14px;padding:12px 16px;font-weight:700;cursor:pointer;font-size:16px}
+    .btn.primary{background:linear-gradient(135deg,#22c55e,#86efac);color:#064e3b}
+    .btn.secondary{background:linear-gradient(135deg,#60a5fa,#bfdbfe);color:#0b3b91}
+    .btn.ghost{background:#eef2f7;color:#0f172a;border:1px solid var(--border)}
+
+    .aside{background:#ffffff;border:1px solid var(--border);border-radius:18px}
+    .legend{padding:18px 22px;border-bottom:1px dashed var(--border)}
+    .legend h3{margin:0 0 6px}
+    .legend p{margin:0;color:var(--muted);font-size:16px}
+
+    .results{padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:10px}
+    .title{font-weight:800;font-size:18px}
+    .brand{color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:6px;flex-wrap:wrap}
+    .chip{background:var(--chip);border:1px solid #dbe2ff;color:#1e293b;font-size:13px;padding:5px 9px;border-radius:999px}
+    .price{font-weight:900}
+    .why{font-size:13px;color:#334155}
+    .score{font-size:13px;color:#0369a1}
+
+    .thumb{width:100%; aspect-ratio: 4/3; border-radius:12px; border:1px solid var(--border); object-fit:cover; background:#f8fafc}
+
+    .footer{color:#64748b;font-size:13px;padding:18px 0;text-align:center}
+
+    /* ===== Mobile tweaks ===== */
+    @media (max-width: 600px){
+      body{font-size:17px}
+      .wrap{padding:16px}
+      .results{grid-template-columns:1fr}
+      .opt{grid-template-columns:1fr}
+      .title{font-size:17px}
+      .btn{width:100%}
+      .actions{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="logo">CF</div>
+      <div>
+        <h1>កម្មវិធីជ្រើសរើសសាប៊ូលាងមុខ</h1>
+        <div class="sub">ឆ្លើយសំណួរខ្លីៗ បន្ទាប់មកយើងនឹងណែនាំផលិតផលសមរម្យបំផុតពីធ្នើនេះ ។</div>
+        <div class="topbar">
+        </div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <form id="quiz" class="panel" autocomplete="off" aria-label="សំណួរ">
+        <div class="section q" aria-labelledby="q1">
+          <h3 id="q1">១) ប្រភេទស្បែករបស់អ្នក?</h3>
+          <div class="opt">
+            <label class="optitem"><input type="radio" name="skinType" value="oily" required> ស្បែកមុខប្រេង</label>
+            <label class="optitem"><input type="radio" name="skinType" value="dry"> ស្បែកមុខស្ងួត</label>
+            <label class="optitem"><input type="radio" name="skinType" value="combo"> ស្បែកមុខចម្រុះ</label>
+            <label class="optitem"><input type="radio" name="skinType" value="normal"> ស្បែកមុខធម្មតា</label>
+            <label class="optitem"><input type="radio" name="skinType" value="sensitive"> ស្បែកមុខងាយប្រតិកម្ម</label>
+          </div>
+        </div>
+
+        <div class="section q" aria-labelledby="q2">
+          <h3 id="q2">២) បញ្ហាស្បែកមុខដែលអ្នកមាន (ជ្រើសរើសច្រើនបាន)</h3>
+          <div class="opt">
+            <label class="optitem"><input type="checkbox" name="concern" value="acne"> ឡើងមុន</label>
+            <label class="optitem"><input type="checkbox" name="concern" value="oil"> ប្រេងខ្លាំង</label>
+            <label class="optitem"><input type="checkbox" name="concern" value="blackheads"> ស្ទះរន្ធញើស/ក្បាលខ្មៅ</label>
+            <label class="optitem"><input type="checkbox" name="concern" value="dullness"> ស្បែកខ្សោយពន្លឺ/ស្នាមខ្មៅជាំ</label>
+            <label class="optitem"><input type="checkbox" name="concern" value="dryness"> ស្បែកស្ងួត/តឹង</label>
+            <label class="optitem"><input type="checkbox" name="concern" value="sensitivity"> ងាយប្រតិកម្ម</label>
+          </div>
+        </div>
+
+        <div class="section q" aria-labelledby="q3">
+          <h3 id="q3">៣) ចំណូលចិត្តស្លាកផលិតផល</h3>
+          <div class="opt">
+            <label class="optitem"><input type="radio" name="genderPref" value="none" checked> ប្រើទាំងពីរប្រភេទ</label>
+            <label class="optitem"><input type="radio" name="genderPref" value="mens"> សម្រាប់បុរស</label>
+            <label class="optitem"><input type="radio" name="genderPref" value="avoidMens"> សម្រាប់ស្ត្រី</label>
+          </div>
+        </div>
+
+        <div class="section q" aria-labelledby="q4">
+          <h3 id="q4">៤) ថវិកា</h3>
+          <div class="opt">
+            <label class="optitem"><input type="radio" name="budget" value="under10"> ក្រោម 10,000</label>
+            <label class="optitem"><input type="radio" name="budget" value="10to13" checked> 10,000 – 13,000</label>
+            <label class="optitem"><input type="radio" name="budget" value="13to16"> 13,000 – 16,000</label>
+          </div>
+        </div>
+
+        <div class="section q" aria-labelledby="q5">
+          <h3 id="q5">៥) ក្លិន</h3>
+          <div class="opt">
+            <label class="optitem"><input type="radio" name="fragrance" value="low" checked> ក្លិនបន្តិច</label>
+            <label class="optitem"><input type="radio" name="fragrance" value="any"> មិនប្រកាន់</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">បង្ហាញការណែនាំ</button>
+          <button class="btn ghost" type="reset" id="resetBtn">កំណត់ឡើងវិញ</button>
+        </div>
+      </form>
+
+      <aside class="aside" aria-label="លទ្ធផល">
+        <div class="legend">
+          <h3>របៀបដំណើរការ</h3>
+          <p>យើងផ្គូផ្គងចម្លើយរបស់អ្នកជាមួយស្លាកផលិតផល (ប្រភេទស្បែក បញ្ហា ថ្លៃ) ហើយគណនាពិន្ទុ ដើម្បីបង្ហាញផលិតផលសមរម្យបំផុត។</p>
+        </div>
+        <div class="section">
+          <h3 style="margin:0">លទ្ធផលល្អបំផុត</h3>
+          <div id="results" class="results" aria-live="polite"></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="footer">ធ្វើឡើងសម្រាប់ម៉ាត/កីអុស • ឯកសារតែមួយ • អាចប្រើដុំឡាញ់ • គាំទ្រក្ដារចុច</div>
+  </div>
+
+  <script>
+    // ====== ទិន្នន័យផលិតផល 18 មុខ ======
+    const formatPrice = n => n.toLocaleString();
+
+    const products = [
+      // រូបទី១ (Men)
+      {id:1, brand:'Garnier Men', name:'AcnoFight Anti‑Acne Scrub in Foam', price:12000, gender:'men', skin:['oily','combo','normal'], concerns:['acne','oil','blackheads'], gentle:false, notes:['Salicylic acid','Herbal repair'], img:'https://aeoncambodia.sgp1.digitaloceanspaces.com/image/catalog/product/8992304015298.jpg'},
+      {id:2, brand:'Gatsby', name:'Oil Clear Solution – Oil Control (Clay + Lemon)', price:12000, gender:'men', skin:['oily','combo','normal'], concerns:['oil','blackheads'], gentle:false, notes:['Clay','Lemon'], img:'https://www.medishop.pk/cdn/shop/files/gatsbay-oil-clear-solution-clay_lemon-oil-control-cooling-facewash_large.jpg?v=1745489016'},
+      {id:3, brand:'Gatsby', name:'Oil Clear Solution – Perfect Clean (Charcoal + Lemon)', price:12000, gender:'men', skin:['oily','combo','normal'], concerns:['oil','blackheads'], gentle:false, notes:['Charcoal','Lemon'], img:'https://ameena.pk/cdn/shop/files/www-2024-09-27T180027.236.webp?v=1727442318'},
+      {id:4, brand:'Nivea Men', name:'Acne 8H Oil Clear', price:12000, gender:'men', skin:['oily','combo','normal'], concerns:['acne','oil'], gentle:false, notes:['Volcanic mud','Magnolia'], img:'https://assets-cdn.vtenh.com/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBK2x0Q1E9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--99ffb5c9ec8d1bd56b9f42c379c46123fc4fa83a/8850029030487.jpg?locale=en'},
+      {id:5, brand:'Nivea Men', name:'Deep Rapid Acne Clear', price:12000, gender:'men', skin:['oily','combo','normal'], concerns:['acne','darkspots','oil'], gentle:false, notes:['Anti‑acne actives'], img:'https://guardian.com.my/media/catalog/product/1/2/121109018.jpg?auto=webp&format=pjpg&width=640&fit=cover'},
+      // រូបទី២
+      {id:6, brand:'Acnes', name:'Oil Control Cleanser', price:12000, gender:'unisex', skin:['oily','combo','normal'], concerns:['oil','acne','blackheads'], gentle:true, notes:['PCA/Zn','Oil control'], img:'https://s9.kh1.co/__image/w=600,h=600,fit=cover/b5/b5d0d6ef4c6884db36a92c1fc632b6476cda6fd0.png'},
+      {id:7, brand:'Acnes', name:'Creamy Wash', price:12000, gender:'unisex', skin:['dry','normal','sensitive'], concerns:['dryness','sensitivity'], gentle:true, notes:['Creamy base'], img:'https://media.makrocambodiaclick.com/PRODUCT_1714558743009.png'},
+      {id:8, brand:'Mistine', name:'Acne Clear (blue)', price:15000, gender:'unisex', skin:['oily','combo','normal'], concerns:['acne','oil'], gentle:false, notes:['Anti‑acne'], img:'https://assets-cdn.vtenh.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBOXR0Q1E9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--67c513be6ac435d129c1b173d67c12a76083d911/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJYW5CbkJqb0dSVlE2RTNKbGMybDZaVjloYm1SZmNHRmtXd2RwQXJ3Q2FRSzhBZz09IiwiZXhwIjpudWxsLCJwdXIiOiJ2YXJpYXRpb24ifX0=--9c1ab4c6fba067ea1df2874292a77e2f2b66dde1/8859178707011.jpg?locale=en'},
+      {id:9, brand:'Mistine', name:'Acne Clear (green)', price:15000, gender:'unisex', skin:['oily','combo','normal','sensitive'], concerns:['acne','oil','sensitivity'], gentle:true, notes:['Soothing'], img:'https://beautygirl.pk/cdn/shop/files/Mistine-Acne-Clear-Avocado-Facial-Foam.jpg?v=1750670372'},
+      {id:10, brand:'Garnier', name:'Bright Complete Vitamin C Scrub', price:12000, gender:'unisex', skin:['normal','oily','combo'], concerns:['dullness','darkspots','blackheads'], gentle:false, notes:['Vitamin C','Scrub'], img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaK9cje6G8GBHJYJXQWeCdGwzvmR-fBILcrwoCSUZXBIKem5T0lAVqcJ2JsjgatKufwxE&usqp=CAU'},
+      {id:11, brand:'Garnier', name:'Pure Active', price:12000, gender:'unisex', skin:['oily','combo','normal'], concerns:['acne','oil','blackheads'], gentle:false, notes:['Salicylic acid'], img:'https://clicks.co.za/medias/?context=bWFzdGVyfHByb2R1Y3QtaW1hZ2VzfDEwNzE3NHxpbWFnZS9qcGVnfGFERmxMMmhoTXk4eE1URTJNelV5T0RBd016WXhOQXxjOTFkMGIwN2I2YTM3Y2JjMmJjMTgzNTNlZGI0MzljMGRlN2E5OWYyMjVhMTgzNGExMDZhZjUxMWUwOWI3NzNk'},
+      {id:12, brand:'Garnier', name:'Bright Anti‑Acne Face Wash', price:12000, gender:'unisex', skin:['oily','combo','normal'], concerns:['acne','oil','darkspots'], gentle:false, notes:['Vitamin C','Acne care'], img:'https://i.ebayimg.com/images/g/fEUAAOSwlnBnSt-z/s-l1200.jpg'},
+      {id:13, brand:'Garnier', name:'Bright Sakura Glow Hyaluron Face Wash', price:12000, gender:'unisex', skin:['dry','normal','sensitive'], concerns:['dryness','dullness'], gentle:true, notes:['Hyaluron','Sakura'], img:'https://s3.konvy.com/static/team/2024/0822/17243254466636.jpg'},
+      {id:14, brand:'Garnier', name:'Bright Complete Vitamin C Face Wash', price:12000, gender:'unisex', skin:['normal','oily','combo'], concerns:['dullness','darkspots'], gentle:true, notes:['Vitamin C'], img:'https://m.media-amazon.com/images/I/317G7S7pqCL._AC_.jpg'},
+      {id:15, brand:'Garnier', name:'Bright Complete Vitamin C Face Scrub', price:12000, gender:'unisex', skin:['normal','oily','combo'], concerns:['dullness','blackheads','darkspots'], gentle:false, notes:['Vitamin C','Exfoliating'], img:'https://cdn.salla.sa/DGdDlG/43e87797-4701-437a-a32c-02ae4832de91-1000x1000-M0ifCPevO2fGGGqCxg55FiV1L36clfaubXzAVrA6.jpg'},
+      {id:16, brand:"Pond's", name:'Dewy Bright', price:8500, gender:'unisex', skin:['normal','dry','combo'], concerns:['dullness','dryness'], gentle:true, notes:['Brightening'], img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSMqWttIqkKm5dLGYo6Z-_dZHMfvo4ObPEKg&s'},
+      {id:17, brand:"Pond's", name:'Hydration', price:8500, gender:'unisex', skin:['dry','normal','sensitive'], concerns:['dryness','sensitivity'], gentle:true, notes:['Aloe'], img:'https://assets.unileversolutions.com/v1/36988211.png'},
+      {id:18, brand:"Pond's", name:'Acne Clear', price:8500, gender:'unisex', skin:['oily','combo','normal'], concerns:['acne','oil'], gentle:true, notes:['Salicylic acid'], img:'https://ponds.in/cdn/shop/products/12666_S1-8901030861475.jpg?v=1669900448&width=540'},
+    ];
+
+    // ===== Scoring =====
+    function scoreProduct(p, ans){
+      let score = 0; let reasons = [];
+      if(p.skin.includes(ans.skinType)){ score += 3; reasons.push('សមស្របប្រភេទស្បែក'); }
+      else if(ans.skinType==='combo' && (p.skin.includes('oily')||p.skin.includes('dry')||p.skin.includes('normal'))){ score += 2; reasons.push('សមស្របស្បែកចម្រុះ'); }
+      const weights = {acne:3, oil:2.5, blackheads:2, dullness:2, darkspots:2, dryness:2.5, sensitivity:2.5};
+      for(const c of ans.concerns){ if(p.concerns.includes(c)){ score += (weights[c]||2); reasons.push(`ជួយបញ្ហា: ${c}`); } }
+      const inBudget = (
+        (ans.budget==='under10' && p.price <= 10000) ||
+        (ans.budget==='10to13' && p.price >= 10000 && p.price <= 13000) ||
+        (ans.budget==='13to16' && p.price > 13000 && p.price <= 16000)
+      );
+      if(inBudget){ score += 1.5; reasons.push('តម្លៃសមរម្យ'); } else { score -= 0.5; }
+      if(ans.genderPref==='mens' && p.gender!=='men') score -= 5;
+      if(ans.genderPref==='avoidMens' && p.gender==='men') score -= 5;
+      if(ans.fragrance==='low' && p.gentle){ score += 1.2; reasons.push('ទន់ភ្លន់/ក្លិនទាប'); }
+      if(ans.concerns.includes('sensitivity') && p.gentle){ score += 0.8; }
+      const has = (kw)=> (p.notes||[]).some(n=> n.toLowerCase().includes(kw));
+      if(ans.concerns.includes('acne') && (has('salicylic')||has('volcanic')||has('anti‑acne'))){ score += 1; reasons.push('សារធាតុប្រឆាំងមុន'); }
+      if(ans.concerns.includes('blackheads') && (has('charcoal')||has('scrub')||has('clay'))){ score += 1; reasons.push('ជួយស្អាតរន្ធញើស'); }
+      if(ans.concerns.includes('dullness') || ans.concerns.includes('darkspots')){
+        if(has('vitamin c')||has('bright')){ score += 1; reasons.push('ជួយភ្លឺរលោង'); }
+      }
+      if(ans.concerns.includes('dryness') && (has('hyaluron')||has('aloe')||p.gentle)){
+        score += 1; reasons.push('បំប៉នសំណើម');
+      }
+      return {score, reasons:[...new Set(reasons)]};
+    }
+
+    function recommend(ans){
+      const scored = products.map(p=>{ const {score,reasons}=scoreProduct(p,ans); return {...p,score,reasons,img: p.img};});
+      scored.sort((a,b)=> b.score - a.score);
+      return scored.slice(0,3);
+    }
+
+    function renderResults(list){
+      const root = document.getElementById('results');
+      root.innerHTML = '';
+      if(!list.length){
+        root.innerHTML = '<div class="card" style="text-align:center; padding: 24px; color: var(--muted);">មិនទាន់មានលទ្ធផលទេ។ <br>សូមជ្រើសរើសចម្លើយ ហើយចុច “បង្ហាញការណែនាំ”។</div>';
+        return;
+      }
+      for(const item of list){
+        const card = document.createElement('div');
+        card.className = 'card';
+        const imgHtml = item.img ? `<img class="thumb" src="${item.img}" alt="${item.brand} ${item.name}" loading="lazy">` : `<div class="thumb" style="display:grid;place-items:center;color:#94a3b8">គ្មានរូប</div>`;
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="title">${item.name}</div>
+          <div class="brand">${item.brand} • <span class="price">${formatPrice(item.price)}៛</span></div>
+          <div class="tags">
+            ${item.skin.map(s=>`<span class="chip" title="ស្បែកសម">${s}</span>`).join('')}
+            ${item.concerns.map(c=>`<span class="chip" title="ជួយ">${c}</span>`).join('')}
+            ${(item.notes||[]).map(n=>`<span class="chip" title="គ្រឿងផ្សំ">${n}</span>`).join('')}
+          </div>
+          <div class="why"><strong>ហេតុផល៖</strong> ${item.reasons.join(', ') || 'សមរម្យទូទៅ'}</div>
+          <div class="score"><strong>ពិន្ទុផ្គូផ្គង:</strong> ${item.score.toFixed(1)}</div>
+        `;
+        root.appendChild(card);
+      }
+    }
+
+    function getAnswers(form){
+      const fd = new FormData(form);
+      const skinType = fd.get('skinType');
+      const concerns = fd.getAll('concern');
+      const genderPref = fd.get('genderPref')||'none';
+      const budget = fd.get('budget')||'10to13';
+      const fragrance = fd.get('fragrance')||'low';
+      return {skinType,concerns,genderPref,budget,fragrance};
+    }
+
+    document.getElementById('quiz').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const ans = getAnswers(e.target);
+      const list = recommend(ans);
+      renderResults(list);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=> setTimeout(()=>renderResults([]),0));
+
+    // First paint
+    renderResults([]);
+  </script>
+</body>
+</html>
