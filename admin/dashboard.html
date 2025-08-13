@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/admin.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/dashboard.css">
@@ -67,35 +68,35 @@
             </header>
 
             <!-- Grid for stats cards -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <h3 data-i18n-key="sales_today">Sales Today</h3>
-                    <p id="sales-today" class="stat-value">$0</p>
+            <div class="stats-grid grid gap-6 md:grid-cols-3">
+                <div class="stat-card rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium text-gray-500" data-i18n-key="sales_today">Sales Today</h3>
+                    <p id="sales-today" class="stat-value text-2xl font-bold">$0</p>
                 </div>
-                <div class="stat-card">
-                    <h3 data-i18n-key="sales_this_month">Sales This Month</h3>
-                    <p id="sales-month" class="stat-value">$0</p>
+                <div class="stat-card rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium text-gray-500" data-i18n-key="sales_this_month">Sales This Month</h3>
+                    <p id="sales-month" class="stat-value text-2xl font-bold">$0</p>
                 </div>
-                <div class="stat-card">
-                    <h3 data-i18n-key="low_stock_items">Low Stock Items</h3>
-                    <p id="low-stock-count" class="stat-value">0</p>
+                <div class="stat-card rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium text-gray-500" data-i18n-key="low_stock_items">Low Stock Items</h3>
+                    <p id="low-stock-count" class="stat-value text-2xl font-bold">0</p>
                 </div>
             </div>
 
             <!-- Grid for charts and lists -->
-            <div class="dashboard-grid">
-                <div class="content-card chart-container">
-                    <h3 data-i18n-key="top_selling_products">Top Selling Products (Last 30 Days)</h3>
+            <div class="dashboard-grid grid gap-6 md:grid-cols-2">
+                <div class="content-card chart-container rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium" data-i18n-key="top_selling_products">Top Selling Products (Last 30 Days)</h3>
                     <canvas id="top-products-chart"></canvas>
                 </div>
-                <div class="content-card">
-                    <h3 data-i18n-key="low_stock_alerts">Low Stock Alerts</h3>
+                <div class="content-card rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium" data-i18n-key="low_stock_alerts">Low Stock Alerts</h3>
                     <ul id="low-stock-list" class="data-list">
                         <!-- Items will be inserted here by JS -->
                     </ul>
                 </div>
-                <div class="content-card warning">
-                    <h3 data-i18n-key="expiring_soon_title">Expiring Soon (Next 30 Days)</h3>
+                <div class="content-card warning rounded-lg border bg-white p-6 shadow">
+                    <h3 class="text-sm font-medium" data-i18n-key="expiring_soon_title">Expiring Soon (Next 30 Days)</h3>
                     <ul id="expiring-soon-list" class="data-list">
                         <!-- List items will be inserted here by JS -->
                         <li>Loading...</li>
