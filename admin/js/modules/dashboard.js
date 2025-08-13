@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const salesMonthEl = document.getElementById('sales-month');
     const lowStockCountEl = document.getElementById('low-stock-count');
     const lowStockListEl = document.getElementById('low-stock-list');
+    const revenueChartCanvas = document.getElementById('revenue-chart').getContext('2d');
     const topProductsChartCanvas = document.getElementById('top-products-chart').getContext('2d');
     const expiringSoonListEl = document.getElementById('expiring-soon-list');
    
@@ -118,6 +119,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderExpiringSoonCard();
             // Populate the UI with the fetched data
             populateWidgets(summary);
+            renderRevenueChart(summary.revenue_last_7_days);
             renderTopProductsChart(summary.top_selling_products);
 
         } catch (error) {
@@ -153,8 +155,42 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- 5. CHART RENDERING ---
+    function renderRevenueChart(data) {
+        const container = document.querySelector('.revenue-container');
+        if (!data || data.length === 0) {
+            const canvas = document.getElementById('revenue-chart');
+            if (canvas) canvas.style.display = 'none';
+            container.innerHTML += '<p style="text-align:center; padding: 2rem;">No revenue data available.</p>';
+            return;
+        }
+
+        const labels = data.map(entry => entry.date);
+        const values = data.map(entry => entry.total);
+
+        new Chart(revenueChartCanvas, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Revenue',
+                    data: values,
+                    fill: false,
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
     function renderTopProductsChart(products) {
-        const chartContainer = document.querySelector('.chart-container');
+        const chartContainer = document.querySelector('.top-products-container');
         if (!products || products.length === 0) {
             // If there's no data, remove the canvas and show a message
             const canvas = document.getElementById('top-products-chart');
