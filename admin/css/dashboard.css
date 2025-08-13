@@ -3,43 +3,7 @@
    ========================================================================== */
 
 /* --- 1. Top Statistics Grid (3-Card Row) --- */
-.stats-grid {
-    display: grid;
-    /* On large screens, display all 3 cards in a row */
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-/* Styling for each individual stat card */
-.stat-card {
-    background-color: var(--bg-card, #ffffff);
-    padding: 1.5rem;
-    border-radius: var(--radius, 8px);
-    box-shadow: var(--shadow, 0 4px 6px rgba(0,0,0,0.05));
-    border-left: 4px solid var(--primary-color, #3b82f6); /* Accent border on the left */
-}
-.stat-card h3 {
-    font-size: 1rem;
-    color: var(--text-light, #64748b);
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-.stat-card .stat-value {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: var(--primary-dark, #1e293b);
-    line-height: 1.2;
-}
-
-/* Special styling for the warning card (if you add one later) */
-.stat-card.warning {
-    border-left-color: var(--warning, #f59e0b);
-}
-.stat-card.warning .stat-value {
-    color: var(--warning, #d97706);
-}
+/* Stats grid and card styles handled by TailwindCSS */
 
 
 /* ================================================= */
@@ -190,20 +154,15 @@
     }
 
     /* Reduce padding on cards for more content space */
-    .stat-card, .content-card {
+    .content-card {
         padding: 1.25rem;
     }
 
     /* --- 2. Font Size Adjustments --- */
-    
+
     /* Make the main page title smaller */
     .main-content .page-header h1 {
-        font-size: 1.5rem; 
-    }
-
-    /* Reduce the font size of the stat card values */
-    .stat-card .stat-value {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
 
     /* Make the titles inside the content cards smaller */
