@@ -8,7 +8,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const salesMonthEl = document.getElementById('sales-month');
     const lowStockCountEl = document.getElementById('low-stock-count');
     const lowStockListEl = document.getElementById('low-stock-list');
+    const revenueChartCanvas = document.getElementById('revenue-chart').getContext('2d');
     const topProductsChartCanvas = document.getElementById('top-products-chart').getContext('2d');
+
+    let revenueChartInstance = null;
+    let topProductsChartInstance = null;
     const expiringSoonListEl = document.getElementById('expiring-soon-list');
    
     function formatKhmerDateCustom(date) {
@@ -118,6 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderExpiringSoonCard();
             // Populate the UI with the fetched data
             populateWidgets(summary);
+            renderRevenueChart(summary.monthly_revenue);
             renderTopProductsChart(summary.top_selling_products);
 
         } catch (error) {
@@ -153,21 +158,67 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // --- 5. CHART RENDERING ---
-    function renderTopProductsChart(products) {
-        const chartContainer = document.querySelector('.chart-container');
-        if (!products || products.length === 0) {
-            // If there's no data, remove the canvas and show a message
-            const canvas = document.getElementById('top-products-chart');
+    function renderRevenueChart(data) {
+        const container = document.querySelector('.revenue-container');
+        if (!data || data.length === 0) {
+            const canvas = document.getElementById('revenue-chart');
             if (canvas) canvas.style.display = 'none';
-            chartContainer.innerHTML += '<p style="text-align:center; padding: 2rem;">No sales data available for the last 30 days.</p>';
+            container.innerHTML = '<p style="text-align:center; padding: 2rem;">No revenue data available.</p>';
             return;
         }
 
-        // Use the column names from your SQL function's return TABLE
-        const labels = products.map(p => p.product_name);
-        const data = products.map(p => p.total_quantity_sold);
+        const labels = data.map(entry => {
+            if (entry.month_name) return entry.month_name;
+            if (entry.month) {
+                const d = new Date();
+                d.setMonth(entry.month - 1);
+                return d.toLocaleString('default', { month: 'short' });
+            }
+            return entry.date;
+        });
+        const values = data.map(entry => entry.total);
 
-        new Chart(topProductsChartCanvas, {
+        if (revenueChartInstance) revenueChartInstance.destroy();
+        revenueChartInstance = new Chart(revenueChartCanvas, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [{
+                    label: 'Revenue',
+                    data: values,
+                    fill: false,
+                    borderColor: 'rgb(59, 130, 246)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    }
+
+    function renderTopProductsChart(products) {
+        const chartContainer = document.querySelector('.top-products-container');
+        if (!products || products.length === 0) {
+            const canvas = document.getElementById('top-products-chart');
+            if (canvas) canvas.style.display = 'none';
+            chartContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">No sales data available for the last 30 days.</p>';
+            return;
+        }
+
+        const topProducts = products.slice(0, 5);
+        const labels = topProducts.map(p => p.product_name);
+        const data = topProducts.map(p => p.total_quantity_sold);
+
+        const canvasEl = document.getElementById('top-products-chart');
+        canvasEl.height = 300;
+
+        if (topProductsChartInstance) topProductsChartInstance.destroy();
+        topProductsChartInstance = new Chart(topProductsChartCanvas, {
             type: 'bar',
             data: {
                 labels: labels,
@@ -180,14 +231,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }]
             },
             options: {
-                indexAxis: 'y', // Horizontal bar chart is best for long product names
+                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     x: {
                         beginAtZero: true,
                         ticks: {
-                            precision: 0 // Show only whole numbers for units
+                            precision: 0
                         }
                     }
                 },
