@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const lowStockListEl = document.getElementById('low-stock-list');
     const revenueChartCanvas = document.getElementById('revenue-chart').getContext('2d');
     const topProductsChartCanvas = document.getElementById('top-products-chart').getContext('2d');
+
+    let revenueChartInstance = null;
+    let topProductsChartInstance = null;
     const expiringSoonListEl = document.getElementById('expiring-soon-list');
    
     function formatKhmerDateCustom(date) {
@@ -119,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             renderExpiringSoonCard();
             // Populate the UI with the fetched data
             populateWidgets(summary);
-            renderRevenueChart(summary.revenue_last_7_days);
+            renderRevenueChart(summary.monthly_revenue);
             renderTopProductsChart(summary.top_selling_products);
 
         } catch (error) {
@@ -160,14 +163,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (!data || data.length === 0) {
             const canvas = document.getElementById('revenue-chart');
             if (canvas) canvas.style.display = 'none';
-            container.innerHTML += '<p style="text-align:center; padding: 2rem;">No revenue data available.</p>';
+            container.innerHTML = '<p style="text-align:center; padding: 2rem;">No revenue data available.</p>';
             return;
         }
 
-        const labels = data.map(entry => entry.date);
+        const labels = data.map(entry => {
+            if (entry.month_name) return entry.month_name;
+            if (entry.month) {
+                const d = new Date();
+                d.setMonth(entry.month - 1);
+                return d.toLocaleString('default', { month: 'short' });
+            }
+            return entry.date;
+        });
         const values = data.map(entry => entry.total);
 
-        new Chart(revenueChartCanvas, {
+        if (revenueChartInstance) revenueChartInstance.destroy();
+        revenueChartInstance = new Chart(revenueChartCanvas, {
             type: 'line',
             data: {
                 labels,
@@ -192,18 +204,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderTopProductsChart(products) {
         const chartContainer = document.querySelector('.top-products-container');
         if (!products || products.length === 0) {
-            // If there's no data, remove the canvas and show a message
             const canvas = document.getElementById('top-products-chart');
             if (canvas) canvas.style.display = 'none';
-            chartContainer.innerHTML += '<p style="text-align:center; padding: 2rem;">No sales data available for the last 30 days.</p>';
+            chartContainer.innerHTML = '<p style="text-align:center; padding: 2rem;">No sales data available for the last 30 days.</p>';
             return;
         }
 
-        // Use the column names from your SQL function's return TABLE
-        const labels = products.map(p => p.product_name);
-        const data = products.map(p => p.total_quantity_sold);
+        const topProducts = products.slice(0, 5);
+        const labels = topProducts.map(p => p.product_name);
+        const data = topProducts.map(p => p.total_quantity_sold);
 
-        new Chart(topProductsChartCanvas, {
+        const canvasEl = document.getElementById('top-products-chart');
+        canvasEl.height = 300;
+
+        if (topProductsChartInstance) topProductsChartInstance.destroy();
+        topProductsChartInstance = new Chart(topProductsChartCanvas, {
             type: 'bar',
             data: {
                 labels: labels,
@@ -216,14 +231,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }]
             },
             options: {
-                indexAxis: 'y', // Horizontal bar chart is best for long product names
+                indexAxis: 'y',
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
                     x: {
                         beginAtZero: true,
                         ticks: {
-                            precision: 0 // Show only whole numbers for units
+                            precision: 0
                         }
                     }
                 },

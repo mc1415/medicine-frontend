@@ -38,6 +38,7 @@
   "sales_today": "ការលក់ថ្ងៃនេះ",
   "sales_this_month": "ការលក់ខែនេះ",
   "low_stock_items": "ទំនិញជិតអស់ស្តុក",
+  "monthly_revenue": "ចំណូលប្រចាំខែ",
   "top_selling_products": "ទំនិញលក់ដាច់ជាងគេ (30 ថ្ងៃ)",
   "low_stock_alerts": "ឥវ៉ាន់ជិតអស់ស្តុក",
   "low_stock_item_details": "(នៅសល់តែ {{quantity}})",
